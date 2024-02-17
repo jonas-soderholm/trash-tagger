@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import MainPage from "./MainPage";
 
-const Map = React.memo(({ center, zoom }) => {
+const Map = React.memo(({ center, zoom, onAddMark }) => {
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerIndex, setMarkerIndex] = useState(1);
 
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
@@ -45,15 +47,28 @@ const Map = React.memo(({ center, zoom }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (markerPosition) {
+      setMarkerIndex(markerIndex + 1);
+      console.log(markerIndex);
+      console.log("CLICKED MAP");
+
+      if (onAddMark) {
+        console.log("map calling");
+        console.log(modalContent);
+        onAddMark(markerIndex, modalContent);
+      }
+
       const marker = L.marker([markerPosition.lat, markerPosition.lng], {
-        icon: L.icon({
-          iconUrl: "/location.png",
+        icon: L.divIcon({
+          className: "my-custom-marker",
+          html: `<div style="text-align: center; background-color: white; color: black;
+           padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
           iconSize: [80, 80],
           iconAnchor: [40, 40],
           popupAnchor: [0, -40],
         }),
       }).addTo(mapRef.current);
-      marker.bindPopup(modalContent).openPopup();
+
+      //marker.bindPopup(modalContent).openPopup();
       handleCloseModal();
       setModalContent("");
     }
