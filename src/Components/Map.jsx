@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import L, { marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MainPage from "./MainPage";
-import { useMarkers } from "./MarkersContext";
 
 export function DeleteMarker() {
   //markers[0].remove();

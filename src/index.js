@@ -1,20 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Navigation from "./Components/Navigation";
-import Form from "./Components/Form";
 import MainPage from "./Components/MainPage";
 import reportWebVitals from "./reportWebVitals";
-import { MarkersProvider } from "./Components/MarkersContext.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MarkersProvider>
-      <MainPage />
-      {/* <Navigation />
-    <Form /> */}
-    </MarkersProvider>
+    <MainPage />
   </React.StrictMode>
 );
 
