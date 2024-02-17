@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import L, { marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MainPage from "./MainPage";
+import { useSharedState } from "../MarkerStateContext.jsx";
 
 export function DeleteMarker() {
   //markers[0].remove();
@@ -15,9 +16,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const [markerIndex, setMarkerIndex] = useState(1);
-  const [markers, setMarkers] = useState([]);
-  //const { markers, setMarkers } = useMarkers();
-
+  const { markers, updateValue } = useSharedState();
   const maxMarkers = 6;
 
   useEffect(() => {
@@ -85,7 +84,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         .addTo(mapRef.current)
         .on("click", (e) => e.target.remove());
 
-      setMarkers((prevMarkers) => {
+      updateValue((prevMarkers) => {
         const updatedMarkers = [...prevMarkers, newMarker];
         console.log(updatedMarkers); // Log updated markers
 

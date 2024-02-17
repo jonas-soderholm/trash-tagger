@@ -4,10 +4,14 @@ import "./index.css";
 import MainPage from "./Components/MainPage";
 import reportWebVitals from "./reportWebVitals";
 
+import { SharedStateProvider } from "./MarkerStateContext.jsx";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MainPage />
+    <SharedStateProvider>
+      <MainPage />
+    </SharedStateProvider>
   </React.StrictMode>
 );
 
