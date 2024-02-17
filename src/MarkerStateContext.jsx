@@ -8,10 +8,20 @@ export const useSharedState = () => {
 
 export const SharedStateProvider = ({ children }) => {
   const [markers, setMarkers] = useState([]);
+  const [markerIndex, setMarkerIndex] = useState(1); // Initialize markerIndex
 
   const updateValue = (newValue) => {
     setMarkers(newValue);
   };
 
-  return <MarkerStateContext.Provider value={{ markers, updateValue }}>{children}</MarkerStateContext.Provider>;
+  const updateMarkerIndex = (newIndex) => {
+    setMarkerIndex(newIndex);
+  };
+
+  // Provide both markers and markerIndex, along with their update functions, to the context
+  return (
+    <MarkerStateContext.Provider value={{ markers, updateValue, markerIndex, updateMarkerIndex }}>
+      {children}
+    </MarkerStateContext.Provider>
+  );
 };

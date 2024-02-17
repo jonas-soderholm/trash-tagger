@@ -4,9 +4,14 @@ import "leaflet/dist/leaflet.css";
 import MainPage from "./MainPage";
 import { useSharedState } from "../MarkerStateContext.jsx";
 
-export function DeleteMarker() {
-  //markers[0].remove();
-  console.log("fda");
+export function DeleteMarker(markers, setMarker, index) {
+  markers[index].remove();
+
+  // Create a new array without the removed marker
+  const updatedMarkers = markers.filter((_, markerIndex) => markerIndex !== index);
+
+  // Update the shared state with the updated markers array
+  setMarker(updatedMarkers);
 }
 
 const Map = React.memo(({ center, zoom, onAddMark }) => {
@@ -15,7 +20,9 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [markerIndex, setMarkerIndex] = useState(1);
+  // const [markerIndex, setMarkerIndex] = useState(1);
+  const { markerIndex, updateMarkerIndex } = useSharedState();
+
   const { markers, updateValue } = useSharedState();
   const maxMarkers = 6;
 
@@ -34,7 +41,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
       });
 
       mapRef.current.on("click", function (e) {
-        setMarkerIndex((prevIndex) => {
+        updateMarkerIndex((prevIndex) => {
           if (prevIndex < maxMarkers) {
             setIsModalOpen(true);
           }
@@ -58,14 +65,14 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   };
 
   useEffect(() => {
-    console.log(markers.length); // Log the current value of markers.length
+    // console.log(markers.length); // Log the current value of markers.length
   }, [markers]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (markerPosition) {
       const newIndex = markerIndex + 1;
-      setMarkerIndex(newIndex);
+      updateMarkerIndex(newIndex);
 
       if (onAddMark) {
         onAddMark(markerIndex, modalContent);

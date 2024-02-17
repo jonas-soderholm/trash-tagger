@@ -3,10 +3,10 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import Map from "./Map";
 import React, { useMemo } from "react";
 import { DeleteMarker } from "./Map";
+import { marker } from "leaflet";
+import { useSharedState } from "../MarkerStateContext.jsx";
 
-function MapButtonClick(index) {
-  return console.log(index);
-}
+function MapButtonClick(index) {}
 
 function MainPage() {
   const [mapArray, setMapArray] = useState([]);
@@ -14,21 +14,26 @@ function MainPage() {
   const [inputValue, setInputValue] = useState("Click on map to add marker");
   const center = useMemo(() => [59.5099648, 17.8847744], []);
   const zoom = useMemo(() => 13, []);
+  const { markers, updateValue } = useSharedState();
+  const { markerIndex, updateMarkerIndex } = useSharedState();
 
   function CreateTagInfoClick(index, info) {
     setCurrentMap(index);
 
-    if (mapArray.length < 5) {
-      const newMap = mapArray.length === 0 ? "newMap" : currentMap;
-      setMapArray((prevMapArray) => [index + ": " + info, ...prevMapArray]);
-      setInputValue(index);
-    } else {
-      console.log("Map full or no text");
-    }
+    setMapArray((prevMapArray) => [...prevMapArray, index + ": " + info]);
+    setInputValue(index);
   }
 
-  function textInputChange(event) {
-    setInputValue(event.target.value);
+  function RemoveButton(info, index) {
+    const newArray = [...mapArray]; // Create a copy of the array
+    newArray.splice(index, 1); // Remove one element at the specified index
+    setMapArray(newArray); // Update state with the modified array
+    console.log(markers + " DELETE " + marker.length);
+    DeleteMarker(markers, updateValue, index);
+
+    updateMarkerIndex((prevIndex) => prevIndex - 1);
+
+    console.log("markerIndex = ", markerIndex);
   }
 
   function CreateButtonsAndHeader() {
@@ -48,17 +53,18 @@ function MainPage() {
     );
   }
 
+  useEffect(() => {
+    console.log("mapArray updated:", mapArray);
+  }, [mapArray]);
+
+  function textInputChange(event) {
+    setInputValue(event.target.value);
+  }
+
   // Define a callback function to pass to Map
   function handleCreateButtonsAndHeader(index, info) {
     console.log("Run CreateTagInfoClick");
     CreateTagInfoClick(index, info);
-  }
-
-  function RemoveButton(index) {
-    const newArray = [...mapArray]; // Create a copy of the array
-    newArray.splice(index, 1); // Remove one element at the specified index
-    setMapArray(newArray); // Update state with the modified array
-    console.log(index + " DELETE");
   }
 
   function ButtonStyle({ info, index }) {
@@ -79,8 +85,7 @@ function MainPage() {
           <div
             className="trash-can-icon rounded-lg p-1"
             onClick={() => {
-              RemoveButton(index);
-              DeleteMarker();
+              RemoveButton(info, index);
             }}
           >
             <div className="hover:text-slate-900 pointer-events-auto">
