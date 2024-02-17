@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import L from "leaflet";
+import L, { marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MainPage from "./MainPage";
+import { useMarkers } from "./MarkersContext";
+
+export function DeleteMarker() {
+  //markers[0].remove();
+  console.log("fda");
+}
 
 const Map = React.memo(({ center, zoom, onAddMark }) => {
   const mapRef = useRef(null);
@@ -10,6 +16,10 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const [markerIndex, setMarkerIndex] = useState(1);
+  const [markers, setMarkers] = useState([]);
+  //const { markers, setMarkers } = useMarkers();
+
+  const maxMarkers = 6;
 
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
@@ -26,11 +36,16 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
       });
 
       mapRef.current.on("click", function (e) {
-        setIsModalOpen(true);
-        setMarkerPosition(e.latlng);
+        setMarkerIndex((prevIndex) => {
+          if (prevIndex < maxMarkers) {
+            setIsModalOpen(true);
+          }
+          setMarkerPosition(e.latlng);
+          console.log(mapRef.current);
+          return prevIndex; // Return the current value to keep it unchanged
+        });
       });
     }
-
     return () => {
       if (mapRef.current) {
         mapRef.current.off("click");
@@ -44,30 +59,39 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    console.log(markers.length); // Log the current value of markers.length
+  }, [markers]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (markerPosition) {
-      setMarkerIndex(markerIndex + 1);
-      console.log(markerIndex);
-      console.log("CLICKED MAP");
+      const newIndex = markerIndex + 1;
+      setMarkerIndex(newIndex);
 
       if (onAddMark) {
-        console.log("map calling");
-        console.log(modalContent);
         onAddMark(markerIndex, modalContent);
       }
 
-      const marker = L.marker([markerPosition.lat, markerPosition.lng], {
+      const newMarker = L.marker([markerPosition.lat, markerPosition.lng], {
         icon: L.divIcon({
           className: "my-custom-marker",
           html: `<div style="text-align: center; background-color: white; color: black;
-           padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
+             padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
           iconSize: [80, 80],
           iconAnchor: [40, 40],
           popupAnchor: [0, -40],
         }),
-      }).addTo(mapRef.current);
+      })
+        .addTo(mapRef.current)
+        .on("click", (e) => e.target.remove());
 
+      setMarkers((prevMarkers) => {
+        const updatedMarkers = [...prevMarkers, newMarker];
+        console.log(updatedMarkers); // Log updated markers
+
+        return updatedMarkers;
+      });
       //marker.bindPopup(modalContent).openPopup();
       handleCloseModal();
       setModalContent("");
