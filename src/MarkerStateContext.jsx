@@ -8,7 +8,7 @@ export const useSharedState = () => {
 
 export const SharedStateProvider = ({ children }) => {
   const [markers, setMarkers] = useState([]);
-  const [markerIndex, setMarkerIndex] = useState(1); // Initialize markerIndex
+  const [markerIndex, setMarkerIndex] = useState(1);
 
   const updateValue = (newValue) => {
     setMarkers(newValue);

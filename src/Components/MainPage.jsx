@@ -3,7 +3,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import Map from "./Map";
 import React, { useMemo } from "react";
 import { DeleteMarker } from "./Map";
-import { marker } from "leaflet";
+import { map, marker } from "leaflet";
 import { useSharedState } from "../MarkerStateContext.jsx";
 
 function MapButtonClick(index) {}
@@ -24,16 +24,30 @@ function MainPage() {
     setInputValue(index);
   }
 
-  function RemoveButton(info, index) {
-    const newArray = [...mapArray]; // Create a copy of the array
-    newArray.splice(index, 1); // Remove one element at the specified index
-    setMapArray(newArray); // Update state with the modified array
+  function RemoveButton(_, index) {
+    const newArray = [...mapArray];
+    newArray.splice(index, 1);
+    setMapArray(newArray);
     console.log(markers + " DELETE " + marker.length);
     DeleteMarker(markers, updateValue, index);
 
-    updateMarkerIndex((prevIndex) => prevIndex - 1);
+    updateMarkerIndex(newArray.length + 1);
 
-    console.log("markerIndex = ", markerIndex);
+    updateMarkersAfterRemoval(index);
+
+    function updateMarkersAfterRemoval(removedIndex) {
+      for (let i = 0; i <= 6; i++) {
+        const markerDiv = document.getElementById(`marker-${i}`);
+        if (markerDiv) {
+          const currentMarkerNumber = parseInt(markerDiv.id.replace("marker-", ""), 10);
+
+          if (currentMarkerNumber > removedIndex) {
+            markerDiv.textContent = currentMarkerNumber - 1;
+            markerDiv.id = `marker-${currentMarkerNumber - 1}`;
+          }
+        }
+      }
+    }
   }
 
   function CreateButtonsAndHeader() {
@@ -45,7 +59,7 @@ function MainPage() {
         <div className="button-container-2 mx-auto bg-[#a98c3600] rounded-lg gap-3  max-w-[45rem] pt-10 ">
           <div className="button-container-1 maps overflow-x-hidden text-2xl rounded-[45px] bg-[#5d5a5a] max-h-[25rem] mx-5 text-slate-200">
             {mapArray.map((names, i) => (
-              <ButtonStyle info={names} index={i} />
+              <ButtonStyle info={i + 1 + ":"} index={i} />
             ))}
           </div>
         </div>
@@ -71,7 +85,7 @@ function MainPage() {
     return (
       <div
         className="button flex justify-between hover:bg-slate-500 cursor-pointer gap-2
-         m-4 p-3 bg-[#888888] rounded-[2rem]"
+         m-4 p-3 bg-[#888686] rounded-[2rem]"
         style={{ position: "relative" }}
         onClick={() => MapButtonClick(index)}
       >

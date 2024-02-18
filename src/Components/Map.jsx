@@ -14,6 +14,15 @@ export function DeleteMarker(markers, setMarker, index) {
   setMarker(updatedMarkers);
 }
 
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 const Map = React.memo(({ center, zoom, onAddMark }) => {
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
@@ -78,11 +87,13 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         onAddMark(markerIndex, modalContent);
       }
 
+      const randomColor = getRandomColor();
+
       const newMarker = L.marker([markerPosition.lat, markerPosition.lng], {
         icon: L.divIcon({
           className: "my-custom-marker",
-          html: `<div style="text-align: center; background-color: white; color: black;
-             padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
+          html: `<div id="marker-${markerIndex}" style="text-align: center; background-color: white; color: black; 
+          padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
           iconSize: [80, 80],
           iconAnchor: [40, 40],
           popupAnchor: [0, -40],
