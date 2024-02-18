@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import L, { marker } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MainPage from "./MainPage";
 import { useSharedState } from "../MarkerStateContext.jsx";
@@ -29,11 +29,17 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
-  // const [markerIndex, setMarkerIndex] = useState(1);
   const { markerIndex, updateMarkerIndex } = useSharedState();
-
   const { markers, updateValue } = useSharedState();
-  const maxMarkers = 6;
+  const maxMarkers = 11;
+  const inputRef = useRef(null); // Reference to the input field
+
+  useEffect(() => {
+    if (isModalOpen && inputRef.current) {
+      // Set focus to the input field when the modal opens
+      inputRef.current.focus();
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
@@ -42,21 +48,13 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
 
-      const customIcon = L.icon({
-        iconUrl: "/location.png",
-        iconSize: [80, 80],
-        iconAnchor: [40, 40],
-        popupAnchor: [0, -40],
-      });
-
       mapRef.current.on("click", function (e) {
         updateMarkerIndex((prevIndex) => {
           if (prevIndex < maxMarkers) {
             setIsModalOpen(true);
           }
           setMarkerPosition(e.latlng);
-          console.log(mapRef.current);
-          return prevIndex; // Return the current value to keep it unchanged
+          return prevIndex;
         });
       });
     }
@@ -92,15 +90,13 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
       const newMarker = L.marker([markerPosition.lat, markerPosition.lng], {
         icon: L.divIcon({
           className: "my-custom-marker",
-          html: `<div id="marker-${markerIndex}" style="text-align: center; background-color: white; color: black; 
+          html: `<div id="marker-${markerIndex}" style="text-align: center; color: #e5e7eb; background-color: rgb(51 65 85);;
           padding: 0px; font-size: 25px; border-radius: 40px;">${markerIndex}</div>`,
           iconSize: [80, 80],
           iconAnchor: [40, 40],
           popupAnchor: [0, -40],
         }),
-      })
-        .addTo(mapRef.current)
-        .on("click", (e) => e.target.remove());
+      }).addTo(mapRef.current);
 
       updateValue((prevMarkers) => {
         const updatedMarkers = [...prevMarkers, newMarker];
@@ -108,7 +104,6 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
         return updatedMarkers;
       });
-      //marker.bindPopup(modalContent).openPopup();
       handleCloseModal();
       setModalContent("");
     }
@@ -131,6 +126,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
               <div className="mt-2">
                 <form onSubmit={handleSubmit}>
                   <input
+                    ref={inputRef} // Attach the ref to the input field
                     type="text"
                     className="mt-2 mb-4 px-4 py-2 border rounded-md w-full"
                     placeholder="Enter marker text..."
