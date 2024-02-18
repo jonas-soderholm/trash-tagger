@@ -20,7 +20,7 @@ function MainPage() {
   function CreateTagInfoClick(index, info) {
     setCurrentMap(index);
 
-    setMapArray((prevMapArray) => [...prevMapArray, index + ": " + info]);
+    setMapArray((prevMapArray) => [...prevMapArray, info]);
     setInputValue(index);
   }
 
@@ -59,7 +59,7 @@ function MainPage() {
         <div className="button-container-2 mx-auto bg-[#a98c3600] rounded-lg gap-3  max-w-[45rem] pt-10 ">
           <div className="button-container-1 maps overflow-x-hidden text-2xl rounded-[45px] bg-[#5d5a5a] max-h-[25rem] mx-5 text-slate-200">
             {mapArray.map((names, i) => (
-              <ButtonStyle info={i + 1 + ":"} index={i} />
+              <ButtonStyle info={i + 1 + ": " + names} index={i} />
             ))}
           </div>
         </div>
