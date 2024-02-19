@@ -56,6 +56,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setModalContent("");
   };
 
   useEffect(() => {}, [markers]);
@@ -83,8 +84,6 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
       updateValue((prevMarkers) => {
         const updatedMarkers = [...prevMarkers, newMarker];
-        console.log("222222222222", updatedMarkers);
-
         return updatedMarkers;
       });
       handleCloseModal();
