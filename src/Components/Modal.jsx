@@ -51,17 +51,3 @@ const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
 };
 
 export default Modal;
-
-// return (
-//     <>
-//       <div id={containerId.current} style={{ height: "100%", width: "100%" }}></div>
-//       <Modal
-//         isOpen={isModalOpen}
-//         onClose={handleCloseModal}
-//         onSubmit={handleSubmit}
-//         content={modalContent}
-//         setContent={setModalContent}
-//       />
-//     </>
-//   );
-// });

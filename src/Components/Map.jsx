@@ -19,7 +19,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const { markerIndex, updateMarkerIndex } = useSharedState();
   const { markers, updateValue } = useSharedState();
-  const maxMarkers = 11;
+  const maxAmmountOfTags = 11;
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -34,10 +34,9 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
-
       mapRef.current.on("click", function (e) {
         updateMarkerIndex((prevIndex) => {
-          if (prevIndex < maxMarkers) {
+          if (prevIndex < maxAmmountOfTags) {
             setIsModalOpen(true);
           }
           setMarkerPosition(e.latlng);

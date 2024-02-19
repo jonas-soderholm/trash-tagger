@@ -22,7 +22,6 @@ export const SharedStateProvider = ({ children }) => {
     setMarkerIndex(newIndex);
   };
 
-  // Provide both markers and markerIndex, along with their update functions, to the context
   return (
     <MarkerStateContext.Provider
       value={{
