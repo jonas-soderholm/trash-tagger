@@ -83,7 +83,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
       updateValue((prevMarkers) => {
         const updatedMarkers = [...prevMarkers, newMarker];
-        console.log(updatedMarkers);
+        console.log("222222222222", updatedMarkers);
 
         return updatedMarkers;
       });
