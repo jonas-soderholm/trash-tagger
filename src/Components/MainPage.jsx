@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 import "leaflet/dist/leaflet.css";
-import { useSharedState } from "../MarkerStateContext.jsx";
+import { useSharedState } from "../SharedContext.jsx";
 import { DeleteMarker } from "./Map";
+import { maxAmmountOfTags } from "./Map";
 import Map from "./Map";
 import Modal from "./Modal.jsx";
-import EditAndDeleteButtonActions from "./EditAndDeleteButtonActions";
 import ShareTagsButton from "./ShareTagsButton";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsForSavedTags";
@@ -16,20 +16,21 @@ function MainPage() {
   const [editIndex, setEditIndex] = useState(0);
   const center = useMemo(() => [59.5099648, 17.8847744], []);
   const zoom = useMemo(() => 13, []);
-  const { markers, updateValue } = useSharedState();
-  const { markerIndex, updateMarkerIndex } = useSharedState();
+  const { markers, setMarkers } = useSharedState();
+  const { markerIndex, setMarkerIndex } = useSharedState();
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
     newArray.splice(index, 1);
     setMapArray(newArray);
-    DeleteMarker(markers, updateValue, index);
+    setMarkers(index);
+    DeleteMarker(markers, setMarkers, index);
 
-    updateMarkerIndex(newArray.length + 1);
+    setMarkerIndex(newArray.length + 1);
     updateMarkersAfterRemoval(index);
 
     function updateMarkersAfterRemoval(removedIndex) {
-      for (let i = 0; i <= 6; i++) {
+      for (let i = 0; i <= maxAmmountOfTags; i++) {
         const markerElement = document.getElementById(`marker-${i}`);
         if (markerElement) {
           const currentMarkerNumber = parseInt(markerElement.id.replace("marker-", ""), 10);
@@ -57,12 +58,14 @@ function MainPage() {
   }
 
   function ModalEditSubmit() {
-    let EditElement = document.querySelector(`.button-${editIndex}`).textContent;
-
-    if (mapArray[editIndex] && EditElement) {
+    if (editIndex >= 0 && editIndex < mapArray.length) {
+      let EditElement = document.querySelector(`.button-${editIndex}`);
+      if (EditElement) {
+        EditElement.textContent = modalContent;
+      }
       mapArray[editIndex] = modalContent;
-      EditElement = modalContent;
     }
+
     setIsModalOpen(false);
     setModalContent("");
   }
@@ -70,31 +73,6 @@ function MainPage() {
   function handleEditClick(index) {
     setEditIndex(index);
     setIsModalOpen(true);
-  }
-
-  function ButtonsForSavedTags() {
-    return (
-      <>
-        <div className="Header bg-[#cd3a3a00] text-2xl pt-5 px-10 text-slate-200 text-center">
-          {mapArray.length !== 0 ? `Current tags: ${markerIndex - 1}` : "Click on map to tag trash"}
-        </div>
-        <div className="button-container-2 mx-auto bg-[#a98c3600] rounded-lg gap-3  max-w-[45rem] pt-10 ">
-          <div className="button-container-1 maps overflow-x-hidden text-2xl rounded-[45px] bg-[#5d5a5a] max-h-[20rem] mx-5 text-slate-200">
-            {mapArray.map((names, i) => {
-              return (
-                <EditAndDeleteButtonActions
-                  key={i}
-                  info={i + 1 + ": " + names}
-                  index={i}
-                  handleEditClick={handleEditClick}
-                  handleDeleteClick={handleDeleteClick}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </>
-    );
   }
 
   return (

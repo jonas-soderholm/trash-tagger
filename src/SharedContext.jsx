@@ -14,21 +14,13 @@ export const SharedStateProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
 
-  const updateValue = (newValue) => {
-    setMarkers(newValue);
-  };
-
-  const updateMarkerIndex = (newIndex) => {
-    setMarkerIndex(newIndex);
-  };
-
   return (
     <MarkerStateContext.Provider
       value={{
         markers,
-        updateValue,
+        setMarkers,
         markerIndex,
-        updateMarkerIndex,
+        setMarkerIndex,
         isModalOpen,
         setIsModalOpen,
         editButtonActive,

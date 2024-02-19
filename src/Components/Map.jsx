@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import MainPage from "./MainPage";
-import { useSharedState } from "../MarkerStateContext.jsx";
+import { useSharedState } from "../SharedContext.jsx";
 import Modal from "./Modal.jsx";
+import MainPage from "./MainPage.jsx";
+
+export const maxAmmountOfTags = 11;
 
 export function DeleteMarker(markers, setMarker, index) {
-  markers[index].remove();
-  const updatedMarkers = markers.filter((_, markerIndex) => markerIndex !== index);
-  setMarker(updatedMarkers);
+  if (index >= 0 && index < markers.length) {
+    markers[index].remove();
+    const updatedMarkers = markers.filter((_, markerIndex) => markerIndex !== index);
+    setMarker(updatedMarkers);
+  }
 }
 
 const Map = React.memo(({ center, zoom, onAddMark }) => {
@@ -17,9 +21,9 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
-  const { markerIndex, updateMarkerIndex } = useSharedState();
-  const { markers, updateValue } = useSharedState();
-  const maxAmmountOfTags = 11;
+  const { markerIndex, setMarkerIndex } = useSharedState();
+  const { markers, setMarkers } = useSharedState();
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
       mapRef.current.on("click", function (e) {
-        updateMarkerIndex((prevIndex) => {
+        setMarkerIndex((prevIndex) => {
           if (prevIndex < maxAmmountOfTags) {
             setIsModalOpen(true);
           }
@@ -64,7 +68,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
     e.preventDefault();
     if (markerPosition) {
       const newIndex = markerIndex + 1;
-      updateMarkerIndex(newIndex);
+      setMarkerIndex(newIndex);
 
       if (onAddMark) {
         onAddMark(markerIndex, modalContent);
@@ -81,7 +85,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         }),
       }).addTo(mapRef.current);
 
-      updateValue((prevMarkers) => {
+      setMarkers((prevMarkers) => {
         const updatedMarkers = [...prevMarkers, newMarker];
         return updatedMarkers;
       });
@@ -103,4 +107,5 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
     </>
   );
 });
+
 export default Map;
