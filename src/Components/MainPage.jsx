@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import Map from "./Map";
-import React, { useMemo } from "react";
-import { DeleteMarker } from "./Map";
-import { map, marker } from "leaflet";
 import { useSharedState } from "../MarkerStateContext.jsx";
-
-function MapButtonClick(index) {}
+import { DeleteMarker } from "./Map";
+import Map from "./Map";
+import Modal from "./Modal.jsx";
 
 function MainPage() {
   const [mapArray, setMapArray] = useState([]);
   const [currentMap, setCurrentMap] = useState("asdasd");
   const [inputValue, setInputValue] = useState("Click on map to add marker");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const center = useMemo(() => [59.5099648, 17.8847744], []);
   const zoom = useMemo(() => 13, []);
   const { markers, updateValue } = useSharedState();
@@ -28,7 +29,6 @@ function MainPage() {
     const newArray = [...mapArray];
     newArray.splice(index, 1);
     setMapArray(newArray);
-    console.log(markers + " DELETE " + marker.length);
     DeleteMarker(markers, updateValue, index);
 
     updateMarkerIndex(newArray.length + 1);
@@ -81,17 +81,20 @@ function MainPage() {
     CreateTagInfoClick(index, info);
   }
 
+  function EditButton(index) {
+    // Here, you can set initial modal content or perform any actions needed before opening the modal
+    // For simplicity, I'm just setting a placeholder content
+    setModalContent(`Editing tag ${index}`);
+    setIsModalOpen(true); // Open the modal
+  }
+
   function ButtonStyle({ info, index }) {
     return (
-      <div
-        className="button flex flex-col justify-between hover:bg-slate-500 cursor-pointer gap-2 m-4 p-3 bg-[#888686] rounded-[2rem] relative"
-        onClick={() => MapButtonClick(index)}
-      >
+      <div className="button flex flex-col justify-between hover:bg-slate-500 cursor-pointer gap-2 m-4 p-3 bg-[#888686] rounded-[2rem] relative">
         <div className="text-container flex-1 break-words mr-20">{info}</div>
-
-        <div className="icons flex gap-4 text-xl absolute mt-4  transform -translate-y-1/2 right-4">
+        <div className="icons flex gap-4 text-xl absolute mt-4 transform -translate-y-1/2 right-4">
           <div className="rounded-lg p-1">
-            <div className="edit-icon hover:text-slate-900 pointer-events-auto">
+            <div className="edit-icon hover:text-slate-900 pointer-events-auto" onClick={() => EditButton(index)}>
               <FaEdit />
             </div>
           </div>
@@ -126,6 +129,16 @@ function MainPage() {
           <Map center={center} zoom={zoom} onAddMark={handleCreateButtonsAndHeader} />
         </div>
       </div>
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setIsModalOpen(false)}>
+              &times;
+            </span>
+            <p>{modalContent}</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }

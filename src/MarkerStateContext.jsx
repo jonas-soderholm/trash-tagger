@@ -9,6 +9,10 @@ export const useSharedState = () => {
 export const SharedStateProvider = ({ children }) => {
   const [markers, setMarkers] = useState([]);
   const [markerIndex, setMarkerIndex] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editButtonActive, setEditButtonActive] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const [editIndex, setEditIndex] = useState(0);
 
   const updateValue = (newValue) => {
     setMarkers(newValue);
@@ -20,7 +24,22 @@ export const SharedStateProvider = ({ children }) => {
 
   // Provide both markers and markerIndex, along with their update functions, to the context
   return (
-    <MarkerStateContext.Provider value={{ markers, updateValue, markerIndex, updateMarkerIndex }}>
+    <MarkerStateContext.Provider
+      value={{
+        markers,
+        updateValue,
+        markerIndex,
+        updateMarkerIndex,
+        isModalOpen,
+        setIsModalOpen,
+        editButtonActive,
+        setEditButtonActive,
+        modalContent,
+        setModalContent,
+        editIndex,
+        setEditIndex,
+      }}
+    >
       {children}
     </MarkerStateContext.Provider>
   );
