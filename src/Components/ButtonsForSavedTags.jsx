@@ -7,7 +7,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
     <>
       {isMobile ? (
         <>
-          <div className="button-container-2 mx-auto bg-[#312f39] gap-2 p-2 w-full h-[14rem] flex flex-col items-center">
+          <div className="button-container-2 mx-auto bg-[#312f39] gap-2 p-6 w-full h-[14rem] flex flex-col items-center">
             <div className="flex">
               <button
                 className={`send-button ${

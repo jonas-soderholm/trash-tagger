@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { useSharedState } from "../SharedContext.jsx";
 import { DeleteMarker } from "./Map";
@@ -19,6 +19,25 @@ function MainPage() {
   const zoom = useMemo(() => 13, []);
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
+
+  useEffect(() => {
+    const adjustHeight = () => {
+      // Only adjust height if on mobile
+      if (isMobile) {
+        const mainContainer = document.querySelector(".main-container");
+        if (mainContainer) {
+          mainContainer.style.height = `${window.innerHeight}px`;
+        }
+      }
+    };
+
+    // Adjust the height on initial load and window resize
+    adjustHeight();
+    window.addEventListener("resize", adjustHeight);
+
+    // Clean up
+    return () => window.removeEventListener("resize", adjustHeight);
+  }, []);
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
