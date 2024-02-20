@@ -75,8 +75,10 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
       const newMarker = L.marker([markerPosition.lat, markerPosition.lng], {
         icon: L.divIcon({
           className: "my-custom-marker body-font",
-          html: `<div id="marker-${markerIndex}" style="display: flex; justify-content: center; align-items: center; color: #e5e7eb; background-color: rgb(51 65 85);
-          padding: 30px; font-size: 23px; border-radius: 100%; height: 100%; width: 100%;">${markerIndex}</div>`,
+          html: `<div id="marker-${markerIndex}" style="display: flex; justify-content: center; align-items: 
+          center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
+           font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform: 
+           translateX(${-20}px) translateY(${-20}px);">${markerIndex}</div>`,
         }),
       }).addTo(mapRef.current);
 

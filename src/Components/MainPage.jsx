@@ -23,16 +23,10 @@ function MainPage() {
   // Resize if phone window update
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth <= 768); // Adjust the threshold according to your design
+      setIsMobile(window.innerWidth <= 768);
     }
-
-    // Add event listener to window resize
     window.addEventListener("resize", handleResize);
-
-    // Call handleResize once on component mount to set initial state
     handleResize();
-
-    // Clean up by removing event listener when component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -50,11 +44,8 @@ function MainPage() {
       }
     };
 
-    // Adjust the height on initial load and window resize
     adjustHeight();
     window.addEventListener("resize", adjustHeight);
-
-    // Clean up
     return () => window.removeEventListener("resize", adjustHeight);
   });
 
