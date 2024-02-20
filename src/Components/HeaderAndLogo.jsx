@@ -2,6 +2,7 @@ import React from "react";
 import { useSharedState } from "../SharedContext.jsx";
 
 function HeaderAndLogo() {
+  // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
   return (
     <>

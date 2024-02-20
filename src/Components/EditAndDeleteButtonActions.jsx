@@ -3,6 +3,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import { useSharedState } from "../SharedContext.jsx";
 
 const EditAndDeleteButtonActions = React.memo(({ info, index, handleEditClick, handleDeleteClick }) => {
+  // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
   return (
     <>

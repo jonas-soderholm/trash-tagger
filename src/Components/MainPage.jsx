@@ -36,7 +36,7 @@ function MainPage() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isMobile]);
 
   // Resize inner window for mobile
   useEffect(() => {

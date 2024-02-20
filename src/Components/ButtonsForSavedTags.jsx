@@ -3,6 +3,7 @@ import EditAndDeleteButtonActions from "./EditAndDeleteButtonActions";
 import { useSharedState } from "../SharedContext.jsx";
 
 function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDeleteClick }) {
+  // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
   return (
     <>

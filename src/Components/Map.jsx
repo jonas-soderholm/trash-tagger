@@ -15,14 +15,14 @@ export function DeleteMarker(markers, setMarker, index) {
 }
 
 const Map = React.memo(({ center, zoom, onAddMark }) => {
+  // eslint-disable-next-line no-unused-vars
+  const { markers, setMarkers } = useSharedState();
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const { markerIndex, setMarkerIndex } = useSharedState();
-  // eslint-disable-next-line no-unused-vars
-  const { markers, setMarkers } = useSharedState();
 
   const inputRef = useRef(null);
 

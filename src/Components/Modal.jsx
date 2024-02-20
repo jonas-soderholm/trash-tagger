@@ -2,8 +2,9 @@ import React, { useRef, useEffect } from "react";
 import { useSharedState } from "../SharedContext.jsx";
 
 const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
-  const inputRef = useRef(null);
+  // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
