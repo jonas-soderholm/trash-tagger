@@ -20,6 +20,20 @@ function MainPage() {
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
 
+  // If user resizes window
+  useEffect(() => {
+    function handleResize() {
+      isMobile = window.innerWidth <= 768;
+    }
+
+    // Update isMobile state on resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Resize inner window for mobile
   useEffect(() => {
     const adjustHeight = () => {
       // Only adjust height if on mobile

@@ -36,6 +36,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+@font-face {
+  font-family: "font-drip";
+  src: url("/public/fonts/adrip1.ttf") format("truetype");
+  /* You can also specify other font properties like font-weight, font-style, etc. */
+}
+
+/* Apply the font to specific elements */
+.header-font {
+  font-family: "font-drip";
+  color: white;
+  /* Additional styling for elements with class .header-font */
+}
+
+.body-font {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400; /* Choose a weight between 100 and 1000 */
+  font-style: normal;
+}
+
 @keyframes headerAnimation {
   0% {
     font-size: 26px;
@@ -48,8 +68,12 @@ code {
   }
 }
 
-.HeaderMobile {
+.animation-tags-header {
   animation: headerAnimation 2s infinite ease-in-out;
+}
+
+.no-animation {
+  animation: none !important;
 }
 
 .send-button-Mobile,
