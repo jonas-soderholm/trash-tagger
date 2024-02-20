@@ -21,6 +21,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
   const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const { markerIndex, setMarkerIndex } = useSharedState();
+  // eslint-disable-next-line no-unused-vars
   const { markers, setMarkers } = useSharedState();
 
   const inputRef = useRef(null);
@@ -54,7 +55,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
         mapRef.current = null;
       }
     };
-  }, [center, zoom]);
+  }, [center, zoom, setMarkerIndex]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
