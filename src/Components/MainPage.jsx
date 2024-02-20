@@ -8,7 +8,6 @@ import Modal from "./Modal.jsx";
 import ShareTagsButton from "./ShareTagsButton";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsForSavedTags";
-export let isMobile = window.innerWidth <= 768;
 
 function MainPage() {
   const [mapArray, setMapArray] = useState([]);
@@ -19,18 +18,24 @@ function MainPage() {
   const zoom = useMemo(() => 13, []);
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
+  const { isMobile, setIsMobile } = useSharedState();
 
-  // If user resizes window
+  // Resize if phone window update
   useEffect(() => {
     function handleResize() {
-      isMobile = window.innerWidth <= 768;
+      setIsMobile(window.innerWidth <= 768); // Adjust the threshold according to your design
     }
 
-    // Update isMobile state on resize
+    // Add event listener to window resize
     window.addEventListener("resize", handleResize);
 
-    // Clean up
-    return () => window.removeEventListener("resize", handleResize);
+    // Call handleResize once on component mount to set initial state
+    handleResize();
+
+    // Clean up by removing event listener when component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // Resize inner window for mobile
@@ -115,7 +120,7 @@ function MainPage() {
         <>
           {/* Mobile version */}
           {/* Pop-up Modal */}
-          <div className="main-container bg-red-500 h-screen flex flex-col">
+          <div className="main-container h-screen flex flex-col">
             {/* Pop-up Modal */}
             <Modal
               isOpen={isModalOpen}
@@ -151,9 +156,9 @@ function MainPage() {
             setContent={setModalContent}
           />
           {/* Main site visual */}
-          <div className="main-container md:flex md:flex-row bg-[#46664200] m-[2vh] rounded-lg h-[96vh] gap-4">
+          <div className="main-container flex m-[2vh] rounded-lg h-[96vh] gap-4">
             {/* Desktop-specific components */}
-            <div className="left-part md:w-1/3 bg-slate-700 rounded-lg ">
+            <div className="left-part w-1/3 bg-slate-700 rounded-lg ">
               <HeaderAndLogo />
               <ButtonsForSavedTags
                 mapArray={mapArray}
@@ -163,7 +168,7 @@ function MainPage() {
               />
               <ShareTagsButton />
             </div>
-            <div className="right-part md:w-2/3 bg-slate-500 rounded-lg">
+            <div className="right-part md:w-2/3 rounded-lg">
               {/* Render lealet map */}
               <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
             </div>

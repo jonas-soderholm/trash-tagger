@@ -11,6 +11,7 @@ export const SharedStateProvider = ({ children }) => {
   const [markerIndex, setMarkerIndex] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editButtonActive, setEditButtonActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
 
@@ -29,6 +30,8 @@ export const SharedStateProvider = ({ children }) => {
         setModalContent,
         editIndex,
         setEditIndex,
+        isMobile,
+        setIsMobile,
       }}
     >
       {children}

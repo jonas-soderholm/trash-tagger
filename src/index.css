@@ -45,7 +45,7 @@ code {
 /* Apply the font to specific elements */
 .header-font {
   font-family: "font-drip";
-  color: white;
+  color: rgb(255, 255, 255);
   /* Additional styling for elements with class .header-font */
 }
 
@@ -54,6 +54,18 @@ code {
   font-optical-sizing: auto;
   font-weight: 400; /* Choose a weight between 100 and 1000 */
   font-style: normal;
+}
+
+@keyframes headerAnimation-mobile {
+  0% {
+    font-size: 20px;
+  }
+  50% {
+    font-size: 22px;
+  }
+  100% {
+    font-size: 20px;
+  }
 }
 
 @keyframes headerAnimation {
@@ -66,6 +78,10 @@ code {
   100% {
     font-size: 26px;
   }
+}
+
+.animation-tags-header-mobile {
+  animation: headerAnimation-mobile 1.7s infinite ease-in-out;
 }
 
 .animation-tags-header {
@@ -88,4 +104,28 @@ code {
 
 .hidden {
   opacity: 0;
+}
+
+.share-button-mobile {
+  background: rgb(39, 43, 55);
+  color: rgb(226 232 240);
+}
+
+.share-button {
+  background: #7d7d86;
+  color: rgb(226 232 240);
+}
+
+.tag-button-colors {
+  background-color: #7d7d86;
+  color: rgb(226 232 240);
+}
+
+.button-container-color {
+  background-color: rgb(39, 43, 55);
+  color: rgb(226 232 240);
+}
+
+.background-color {
+  background-color: rgb(51 65 85);
 }
