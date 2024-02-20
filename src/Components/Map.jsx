@@ -3,7 +3,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useSharedState } from "../SharedContext.jsx";
 import Modal from "./Modal.jsx";
-import MainPage from "./MainPage.jsx";
 
 export const maxAmmountOfTags = 11;
 
@@ -61,8 +60,6 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
     setIsModalOpen(false);
     setModalContent("");
   };
-
-  useEffect(() => {}, [markers]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

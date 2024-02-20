@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import EditAndDeleteButtonActions from "./EditAndDeleteButtonActions";
 import { isMobile } from "./MainPage";
 
@@ -28,7 +27,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
               {mapArray.length !== 0 ? `Current tags: ${markerIndex - 1}` : "Click on map to tag trash"}
             </div>
             <div
-              className={`button-container-1 w-full maps overflow-x-hidden text-sm rounded-[45px] bg-[#5d5a5a] mx-5 max-h-[24rem] text-slate-200 ${
+              className={`button-container-1 w-full maps overflow-x-hidden text-sm rounded-[28px] bg-[#5d5a5a] mx-5 max-h-[24rem] text-slate-200 ${
                 mapArray.length === 0 ? "hidden" : "visible"
               }`}
             >
