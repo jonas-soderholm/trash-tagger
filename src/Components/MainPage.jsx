@@ -8,6 +8,7 @@ import Modal from "./Modal.jsx";
 import ShareTagsButton from "./ShareTagsButton";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsForSavedTags";
+export let isMobile = window.innerWidth <= 768;
 
 function MainPage() {
   const [mapArray, setMapArray] = useState([]);
@@ -77,31 +78,65 @@ function MainPage() {
 
   return (
     <>
-      {/* Pop-up Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={CloseModalWindow}
-        onSubmit={ModalEditSubmit}
-        content={modalContent}
-        setContent={setModalContent}
-      />
-      {/* Main site visual */}
-      <div className="main-container md:flex md:flex-row  bg-[#46664200] m-[2vh] rounded-lg h-[96vh] gap-4">
-        <div className="left-part md:w-1/3 bg-slate-700 rounded-lg ">
-          <HeaderAndLogo />
-          <ButtonsForSavedTags
-            mapArray={mapArray}
-            markerIndex={markerIndex}
-            handleEditClick={handleEditClick}
-            handleDeleteClick={handleDeleteClick}
+      {isMobile ? (
+        <>
+          {/* Mobile version */}
+          {/* Pop-up Modal */}
+          <div className="main-container bg-red-500 h-screen flex flex-col">
+            {/* Pop-up Modal */}
+            <Modal
+              isOpen={isModalOpen}
+              onClose={CloseModalWindow}
+              onSubmit={ModalEditSubmit}
+              content={modalContent}
+              setContent={setModalContent}
+            />
+            {/* Main site visual */}
+            <div className="flex-1 h-[100vh]">
+              {/* Render leaflet map */}
+              <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
+            </div>
+            {/* Bottom part */}
+
+            <ButtonsForSavedTags
+              mapArray={mapArray}
+              markerIndex={markerIndex}
+              handleEditClick={handleEditClick}
+              handleDeleteClick={handleDeleteClick}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          {/* PC */}
+          {/* Pop-up Modal */}
+          <Modal
+            isOpen={isModalOpen}
+            onClose={CloseModalWindow}
+            onSubmit={ModalEditSubmit}
+            content={modalContent}
+            setContent={setModalContent}
           />
-          <ShareTagsButton />
-        </div>
-        <div className="right-part md:w-2/3 bg-slate-500 rounded-lg">
-          {/* Render lealet map */}
-          <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
-        </div>
-      </div>
+          {/* Main site visual */}
+          <div className="main-container md:flex md:flex-row bg-[#46664200] m-[2vh] rounded-lg h-[96vh] gap-4">
+            {/* Desktop-specific components */}
+            <div className="left-part md:w-1/3 bg-slate-700 rounded-lg ">
+              <HeaderAndLogo />
+              <ButtonsForSavedTags
+                mapArray={mapArray}
+                markerIndex={markerIndex}
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
+              />
+              <ShareTagsButton />
+            </div>
+            <div className="right-part md:w-2/3 bg-slate-500 rounded-lg">
+              {/* Render lealet map */}
+              <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

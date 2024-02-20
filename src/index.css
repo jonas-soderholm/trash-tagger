@@ -19,6 +19,10 @@
   background-color: #4b5563; /* color of the scrollbar thumb on hover */
 }
 
+.transition-ease {
+  transition: all 0.3s ease;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
@@ -30,4 +34,34 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@keyframes headerAnimation {
+  0% {
+    font-size: 26px;
+  }
+  50% {
+    font-size: 30px;
+  }
+  100% {
+    font-size: 26px;
+  }
+}
+
+.HeaderMobile {
+  animation: headerAnimation 2s infinite ease-in-out;
+}
+
+.send-button-Mobile,
+.button-container-1-Mobile {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
 }

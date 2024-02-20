@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { isMobile } from "./MainPage";
 
 const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
   const inputRef = useRef(null);
@@ -28,6 +29,7 @@ const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
                 placeholder="Enter marker text..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
+                maxLength={isMobile ? 100 : 200}
               />
               <button
                 type="submit"
