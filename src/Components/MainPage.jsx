@@ -36,7 +36,7 @@ function MainPage() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isMobile]);
+  });
 
   // Resize inner window for mobile
   useEffect(() => {
@@ -56,7 +56,7 @@ function MainPage() {
 
     // Clean up
     return () => window.removeEventListener("resize", adjustHeight);
-  }, []);
+  });
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
