@@ -5,6 +5,7 @@ import { DeleteMarker } from "./Map";
 import { maxAmmountOfTags } from "./Map";
 import Map from "./Map";
 import Modal from "./Modal.jsx";
+import BackendTesting from "./BackendTesting.jsx";
 import ShareTagsButton from "./ShareTagsButton";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsForSavedTags";
@@ -14,11 +15,26 @@ function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
-  const center = useMemo(() => [59.5099648, 17.8847744], []);
-  const zoom = useMemo(() => 13, []);
+  // const center = useMemo(() => [59.5099648, 17.8847744], []);
+  // const zoom = useMemo(() => 13, []);
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
+  const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { sharedMarkers, setIsSharedMarkers } = useSharedState();
+
+  // Check if the user is accessing the page through a shared link
+  const checkSharedLink = () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const isShared = !queryParams.has("markerId");
+    setIsSharedLink(isShared);
+    console.log(isShared);
+  };
+
+  // Call checkSharedLink when the component mounts
+  useEffect(() => {
+    checkSharedLink();
+  }, [isSharedLink]);
 
   // Resize if phone window update
   useEffect(() => {
@@ -123,7 +139,7 @@ function MainPage() {
             {/* Main site visual */}
             <div className="flex-1 h-[100vh]">
               {/* Render leaflet map */}
-              <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
+              <Map onAddMark={handleMapClicks} />
             </div>
             {/* Bottom part */}
 
@@ -158,10 +174,12 @@ function MainPage() {
                 handleDeleteClick={handleDeleteClick}
               />
               <ShareTagsButton />
+              <BackendTesting />
             </div>
+
             <div className="right-part md:w-2/3 rounded-lg">
               {/* Render lealet map */}
-              <Map center={center} zoom={zoom} onAddMark={handleMapClicks} />
+              <Map onAddMark={handleMapClicks} />
             </div>
           </div>
         </>

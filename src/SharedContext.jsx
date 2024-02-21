@@ -14,6 +14,8 @@ export const SharedStateProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
+  const [isSharedLink, setIsSharedLink] = useState(false);
+  const [sharedMarkers, setSharedMarkers] = useState([{ latitude: 59.5099648, longitude: 17.8847744 }]);
 
   return (
     <MarkerStateContext.Provider
@@ -32,6 +34,10 @@ export const SharedStateProvider = ({ children }) => {
         setEditIndex,
         isMobile,
         setIsMobile,
+        isSharedLink,
+        setIsSharedLink,
+        sharedMarkers,
+        setSharedMarkers,
       }}
     >
       {children}
