@@ -34,7 +34,7 @@ const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
               <input
                 ref={inputRef}
                 type="text"
-                className="mt-2 mb-4 px-4 py-2 border rounded-md w-full body-font"
+                className="mt-2 mb-4 px-4 py-2 border rounded-md w-full body-font focus:border-slate-400 outline-none"
                 placeholder="Enter marker text..."
                 value={contenter} // Use 'contenter' for input value
                 onChange={(e) => {
@@ -54,7 +54,9 @@ share-button py-2 px-4 text-sm font-medium text-white shadow-sm`}
               </button>
               <button
                 type="button"
-                className="ml-2 body-font inline-flex justify-center rounded-md border px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                className="ml-2 body-font inline-flex justify-center rounded-md border px-4 py-2 bg-white text-sm 
+                font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 
+                focus:ring-offset-2 focus:ring-gray-500"
                 onClick={onClose}
               >
                 Cancel

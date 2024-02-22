@@ -14,8 +14,8 @@ export function DeleteMarker(markers, setMarker, index) {
   }
 }
 
-export function createNewSharableMarker(markerId, lat, long, info) {
-  return { markerId: markerId, latitude: lat, longitude: long, info: info };
+export function createNewSharableMarker(lat, long, info) {
+  return { latitude: lat, longitude: long, info: info };
 }
 
 const Map = React.memo(({ onAddMark }) => {
@@ -73,21 +73,21 @@ const Map = React.memo(({ onAddMark }) => {
       });
 
       // // Add a marker for the shared location
-      // if (sharedMarkers && sharedMarkers.length > 0 && mapRef.current) {
-      //   sharedMarkers.forEach((marker, i) => {
-      //     const { latitude, longitude, tagInformation } = marker;
-      //     const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
-      //     center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
-      //      font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
-      //      translateX(${-20}px) translateY(${-20}px);">${i + 1}</div>`;
-      //     L.marker([latitude, longitude], {
-      //       icon: L.divIcon({
-      //         className: "",
-      //         html: markerHtml,
-      //       }),
-      //     }).addTo(mapRef.current);
-      //   });
-      // }
+      if (sharedMarkers && sharedMarkers.length > 0 && mapRef.current) {
+        sharedMarkers.forEach((marker, i) => {
+          const { latitude, longitude, tagInformation } = marker;
+          const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
+          center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
+           font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
+           translateX(${-20}px) translateY(${-20}px);">${i + 1}</div>`;
+          L.marker([latitude, longitude], {
+            icon: L.divIcon({
+              className: "",
+              html: markerHtml,
+            }),
+          }).addTo(mapRef.current);
+        });
+      }
     }
 
     return () => {
@@ -138,7 +138,7 @@ const Map = React.memo(({ onAddMark }) => {
       setModalContent(modalContent);
 
       // Sharing object DB
-      const newShareTemp = createNewSharableMarker(newIndex, markerPosition.lat, markerPosition.lng, modalContent);
+      const newShareTemp = createNewSharableMarker(markerPosition.lat, markerPosition.lng, modalContent);
       setNewSharingObject(newShareTemp);
       setSharedMarkers((prevSharedMarkers) => [...prevSharedMarkers, newShareTemp]);
 

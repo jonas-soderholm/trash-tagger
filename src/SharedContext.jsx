@@ -15,7 +15,11 @@ export const SharedStateProvider = ({ children }) => {
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
   const [isSharedLink, setIsSharedLink] = useState(false);
-  const [sharedMarkers, setSharedMarkers] = useState([]);
+  const [sharedMarkers, setSharedMarkers] = useState([
+    { latitude: 59.51196696926434, longitude: 17.87826461643578, info: "Bajs" },
+    { latitude: 59.71196696926434, longitude: 17.87826461643578, info: "Piss" },
+    { latitude: 59.61196696926434, longitude: 17.87826461643578, info: "Korv" },
+  ]);
   const [newSharingObject, setNewSharingObject] = useState({});
   const [tagInformation, setTagInformation] = useState({});
 

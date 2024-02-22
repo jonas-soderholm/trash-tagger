@@ -5,6 +5,9 @@ import { useSharedState } from "../SharedContext.jsx";
 function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDeleteClick }) {
   // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
+  const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { sharedMarkers, setSharedMarkers } = useSharedState();
+
   return (
     <>
       {isMobile ? (
@@ -50,15 +53,25 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
                 mapArray.length === 0 ? "hidden" : "visible"
               }`}
             >
-              {mapArray.map((names, i) => (
-                <EditAndDeleteButtonActions
-                  key={i}
-                  info={i + 1 + ": " + names}
-                  index={i}
-                  handleEditClick={handleEditClick}
-                  handleDeleteClick={handleDeleteClick}
-                />
-              ))}
+              {!isSharedLink
+                ? mapArray.map((names, index) => (
+                    <EditAndDeleteButtonActions
+                      key={index}
+                      info={index + 1 + ": " + names}
+                      index={index}
+                      handleEditClick={handleEditClick}
+                      handleDeleteClick={handleDeleteClick}
+                    />
+                  ))
+                : sharedMarkers.map((marker, index) => (
+                    <EditAndDeleteButtonActions
+                      key={index}
+                      info={`${index + 1}: ${marker.info}`}
+                      index={index}
+                      handleEditClick={handleEditClick}
+                      handleDeleteClick={handleDeleteClick}
+                    />
+                  ))}
             </div>
           </div>
         </>
@@ -74,17 +87,25 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
           </div>
           <div className="button-container-2 mx-auto gap-3 max-w-[45rem] pt-10 ">
             <div className="button-container-1 maps overflow-x-hidden text-1xl rounded-sm button-container-color max-h-[20rem] mx-5 text-slate-200">
-              {mapArray.map((names, i) => {
-                return (
-                  <EditAndDeleteButtonActions
-                    key={i}
-                    info={i + 1 + ": " + names}
-                    index={i}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                );
-              })}
+              {!isSharedLink
+                ? mapArray.map((names, index) => (
+                    <EditAndDeleteButtonActions
+                      key={index}
+                      info={index + 1 + ": " + names}
+                      index={index}
+                      handleEditClick={handleEditClick}
+                      handleDeleteClick={handleDeleteClick}
+                    />
+                  ))
+                : sharedMarkers.map((marker, index) => (
+                    <EditAndDeleteButtonActions
+                      key={index}
+                      info={`${index + 1}: ${marker.info}`}
+                      index={index}
+                      handleEditClick={handleEditClick}
+                      handleDeleteClick={handleDeleteClick}
+                    />
+                  ))}
             </div>
           </div>
         </>
