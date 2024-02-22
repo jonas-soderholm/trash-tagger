@@ -18,6 +18,8 @@ function MainPage() {
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
+  const { sharedMarkers, setSharedMarkers } = useSharedState();
+
   const { isSharedLink, setIsSharedLink } = useSharedState();
 
   // Check if the user is accessing the page through a shared link
@@ -85,6 +87,13 @@ function MainPage() {
         }
       }
     }
+
+    // Update shared after delete
+    setSharedMarkers((prevSharedMarkers) => {
+      // Create a new array excluding the item at the specified index
+      const filteredMarkers = prevSharedMarkers.filter((_, itemIndex) => itemIndex !== index);
+      return filteredMarkers;
+    });
   }
 
   function handleMapClicks(index, info) {
@@ -109,8 +118,23 @@ function MainPage() {
       }
       mapArray[editIndex] = modalContent;
     }
-
     setIsModalOpen(false);
+
+    setSharedMarkers((prevSharedMarkers) => {
+      if (prevSharedMarkers.length === 0) return [];
+
+      // Create a new array by copying the previous state
+      const updatedMarkers = [...prevSharedMarkers];
+
+      // Update the item at editIndex with new information
+      updatedMarkers[editIndex] = {
+        ...prevSharedMarkers[editIndex],
+        info: modalContent, // Assume modalContent contains the updated info
+      };
+
+      return updatedMarkers;
+    });
+
     setModalContent("");
   }
 

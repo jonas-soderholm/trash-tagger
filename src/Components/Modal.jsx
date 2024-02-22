@@ -1,16 +1,20 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSharedState } from "../SharedContext.jsx";
 
 const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
   // eslint-disable-next-line no-unused-vars
   const { isMobile, setIsMobile } = useSharedState();
   const inputRef = useRef(null);
+  const [contenter, setContenter] = useState("");
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isOpen]);
+    setContenter(content);
+
+    console.log(contenter);
+  }, [isOpen, content]);
 
   if (!isOpen) return null;
 
@@ -32,13 +36,19 @@ const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
                 type="text"
                 className="mt-2 mb-4 px-4 py-2 border rounded-md w-full body-font"
                 placeholder="Enter marker text..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                value={contenter} // Use 'contenter' for input value
+                onChange={(e) => {
+                  setContenter(e.target.value);
+                  setContent(e.target.value);
+                }}
                 maxLength={isMobile ? 100 : 200}
               />
               <button
                 type="submit"
-                className="inline-flex body-font justify-center rounded-md border border-transparent share-button py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                className={`${
+                  contenter.trim() ? "bg-[#2b59ef]" : "bg-[#c5cce3]"
+                } inline-flex body-font justify-center rounded-md border border-transparent 
+share-button py-2 px-4 text-sm font-medium text-white shadow-sm`}
               >
                 Submit
               </button>

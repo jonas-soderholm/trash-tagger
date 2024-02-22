@@ -23,7 +23,7 @@ const Map = React.memo(({ onAddMark }) => {
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState();
+  const [modalContent, setModalContent] = useState("");
   const [markerPosition, setMarkerPosition] = useState(null);
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { sharedMarkers, setSharedMarkers } = useSharedState();
@@ -106,6 +106,12 @@ const Map = React.memo(({ onAddMark }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!modalContent.trim()) {
+      console.log("Content is empty, not submitting.");
+      return; // Exit the function to prevent further action
+    }
+
     if (markerPosition) {
       const newIndex = markerIndex + 1;
       setMarkerIndex(newIndex);
@@ -132,12 +138,21 @@ const Map = React.memo(({ onAddMark }) => {
       setModalContent(modalContent);
 
       // Sharing object DB
-      setNewSharingObject(createNewSharableMarker(newIndex, markerPosition.lat, markerPosition.lng, modalContent));
-      setSharedMarkers((prevSharedMarkers) => [...prevSharedMarkers, newSharingObject]);
+      const newShareTemp = createNewSharableMarker(newIndex, markerPosition.lat, markerPosition.lng, modalContent);
+      setNewSharingObject(newShareTemp);
+      setSharedMarkers((prevSharedMarkers) => [...prevSharedMarkers, newShareTemp]);
 
       handleCloseModal();
     }
   };
+
+  useEffect(() => {
+    console.log(newSharingObject);
+  }, [newSharingObject]);
+
+  useEffect(() => {
+    console.log(sharedMarkers);
+  }, [sharedMarkers]);
 
   return (
     <>
