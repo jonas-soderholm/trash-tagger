@@ -5,6 +5,7 @@ const cors = require("cors"); // Import the cors middleware
 const app = express();
 const PORT = process.env.PORT || 3100;
 const markerInforRowLimit = 5;
+
 app.use(express.json()); // Middleware to parse JSON bodies
 
 // Create a connection to the database

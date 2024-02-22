@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { useSharedState } from "../SharedContext.jsx";
 import { DeleteMarker } from "./Map";
@@ -15,20 +15,17 @@ function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
-  // const center = useMemo(() => [59.5099648, 17.8847744], []);
-  // const zoom = useMemo(() => 13, []);
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
-  const { sharedMarkers, setIsSharedMarkers } = useSharedState();
 
   // Check if the user is accessing the page through a shared link
   const checkSharedLink = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const isShared = !queryParams.has("markerId");
     setIsSharedLink(isShared);
-    console.log(isShared);
+    console.log("Is Shared: ", isShared);
   };
 
   // Call checkSharedLink when the component mounts
@@ -91,12 +88,13 @@ function MainPage() {
   }
 
   function handleMapClicks(index, info) {
-    AddMarkerInformationOnClick(index, info);
-  }
-
-  function AddMarkerInformationOnClick(_, info) {
+    // AddMarkerInformationOnClick(index, info);
     setMapArray((prevMapArray) => [...prevMapArray, info]);
   }
+
+  // function AddMarkerInformationOnClick(index, info) {
+  //   setMapArray((prevMapArray) => [...prevMapArray, info]);
+  // }
 
   function CloseModalWindow() {
     setIsModalOpen(false);

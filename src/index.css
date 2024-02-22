@@ -85,7 +85,7 @@ code {
 }
 
 .animation-tags-header {
-  animation: headerAnimation 2s infinite ease-in-out;
+  /* animation: headerAnimation 2s infinite ease-in-out; */
 }
 
 .no-animation {
