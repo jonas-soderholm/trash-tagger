@@ -14,22 +14,38 @@
 
 import React from "react";
 import axios from "axios";
+import { useSharedState } from "../SharedContext.jsx";
 
 function ShareTagsButton() {
-  console.log("Share button clicked");
+  const { sharedMarkers } = useSharedState();
 
   const handleClick = async () => {
+    // Extract marker IDs from sharedMarkers
+    const markerIds = sharedMarkers.map((marker) => marker.markId);
+
     try {
-      // Send an HTTP POST request to your backend API endpoint
-      await axios.post("http://localhost:3100/TagInformation", {
-        // markId: 22,
-        latitude: 22.555,
-        longitude: 2321312.2323,
-        tagInformation: "1: Ciggarettes here",
-      });
-      alert("Tag added successfully!");
+      // Send the marker IDs to the backend to create a shared link
+      const response = await axios.post("http://localhost:3100/create-shared-link", { markerIds });
+
+      // Extract the shared link from the response
+      const { link } = response.data;
+
+      // Display the link to the user or handle as needed
+      console.log("Shared link created:", link);
+      alert(`Shared link created: ${link}`);
+
+      // Optionally, copy the link to the clipboard
+      navigator.clipboard.writeText(link).then(
+        () => {
+          console.log("Link copied to clipboard");
+        },
+        (err) => {
+          console.error("Could not copy link to clipboard", err);
+        }
+      );
     } catch (error) {
-      console.error("Error adding tag:", error);
+      console.error("Error creating shared link:", error);
+      alert("Failed to create shared link.");
     }
   };
 
