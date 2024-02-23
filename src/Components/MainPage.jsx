@@ -6,7 +6,7 @@ import { maxAmmountOfTags } from "./Map";
 import Map from "./Map";
 import Modal from "./Modal.jsx";
 import BackendTesting from "./BackendTesting.jsx";
-import ShareTagsButton from "./ShareTagsButton";
+import ShareMarkersButton from "./ShareMarkersButton.jsx";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsForSavedTags";
 
@@ -26,7 +26,7 @@ function MainPage() {
   const checkSharedLink = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const isShared = !queryParams.has("markerId");
-    setIsSharedLink(isShared);
+    setIsSharedLink(!isShared);
     console.log("Is Shared: ", isShared);
   };
 
@@ -195,7 +195,7 @@ function MainPage() {
                 handleEditClick={handleEditClick}
                 handleDeleteClick={handleDeleteClick}
               />
-              <ShareTagsButton />
+              <ShareMarkersButton />
               <BackendTesting />
             </div>
 

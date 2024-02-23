@@ -28,6 +28,8 @@ const Map = React.memo(({ onAddMark }) => {
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { newSharingObject, setNewSharingObject } = useSharedState();
+  const { isSharedLink, setIsSharedLink } = useSharedState();
+
   const [center, setCenter] = useState([0, 0]);
   const zoom = 15;
   const inputRef = useRef(null);
@@ -45,7 +47,7 @@ const Map = React.memo(({ onAddMark }) => {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
 
-      // Add a marker for the current location
+      // Zoom in on user when chosen allow on gps
       //mapRef.current.locate({ setView: true, maxZoom: 16 });
 
       // mapRef.current.on("locationfound", function (e) {
@@ -73,7 +75,8 @@ const Map = React.memo(({ onAddMark }) => {
       });
 
       // // Add a marker for the shared location
-      if (sharedMarkers && sharedMarkers.length > 0 && mapRef.current) {
+
+      if (isSharedLink && sharedMarkers && sharedMarkers.length > 0 && mapRef.current) {
         sharedMarkers.forEach((marker, i) => {
           const { latitude, longitude, tagInformation } = marker;
           const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:

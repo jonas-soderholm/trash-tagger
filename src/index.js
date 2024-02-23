@@ -13,7 +13,6 @@ root.render(
   <React.StrictMode>
     <SharedStateProvider>
       <MainPage />
-      <BackendTesting />
     </SharedStateProvider>
   </React.StrictMode>
 );

@@ -1,7 +1,10 @@
 import React from "react";
+import { useSharedState } from "../SharedContext.jsx";
 
-class BackendTesting extends React.Component {
-  fetchUsers = async () => {
+function BackendTesting() {
+  const { sharedMarkers, setSharedMarkers } = useSharedState();
+
+  const fetchMarkerInformation = async () => {
     try {
       const response = await fetch("http://localhost:3100/MarkerInformation");
       if (!response.ok) {
@@ -15,15 +18,38 @@ class BackendTesting extends React.Component {
     }
   };
 
-  render() {
-    return (
+  const sendMarkerData = async () => {
+    try {
+      const response = await fetch("http://localhost:3100/MarkerInformation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sharedMarkers),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      console.log("Marker data sent successfully");
+    } catch (error) {
+      console.error("Error sending marker data:", error);
+    }
+  };
+
+  return (
+    <>
       <div>
-        <button className=" w-52" onClick={this.fetchUsers}>
+        <button className=" w-52" onClick={fetchMarkerInformation}>
           Fetch TagInformation
         </button>
+        <button className=" w-52" onClick={sendMarkerData}>
+          Send Marker
+        </button>
       </div>
-    );
-  }
+    </>
+  );
 }
 
 export default BackendTesting;
