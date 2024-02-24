@@ -6,6 +6,8 @@ function ButtonShareMarkers() {
   const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
   const { markersLoaded, setMarkersLoaded } = useSharedState();
+  const { isMobile, setIsMobile } = useSharedState();
+  const { mapArray, setMapArray } = useSharedState();
 
   // Send markers and generate new sharable link based on those
   const sendMarkerData = async () => {
@@ -48,7 +50,7 @@ function ButtonShareMarkers() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("Group Markers Data:", data);
+      //console.log("Group Markers Data:", data);
       setSharedMarkers(data);
       setIsSharedLink(true);
       setMarkersLoaded(true);
@@ -71,14 +73,33 @@ function ButtonShareMarkers() {
 
   return (
     <>
-      <div className="flex justify-center">
-        <button
-          className="send-button body-font text-xl bg-opacity-50 backdrop-blur-xl flex px-5 py-4 rounded-full fixed mb-10 p4 hover:bg-slate-500 share-button bottom-2 mx-auto"
-          onClick={sendMarkerData}
-        >
-          Share your tags!
-        </button>
-      </div>
+      {isMobile ? (
+        <>
+          <button
+            onClick={sendMarkerData}
+            className={`send-button ${
+              mapArray.length === 0 ? "hidden" : "visible"
+            } text-xs px-2 text-center my-auto py-2 rounded-sm share-button-mobile`}
+          >
+            Share your tags!
+          </button>
+        </>
+      ) : (
+        <>
+          {!isSharedLink && (
+            <>
+              <div className="flex justify-center">
+                <button
+                  className="send-button body-font text-xl bg-opacity-50 backdrop-blur-xl flex px-5 py-4 rounded-full fixed mb-10 p4 hover:bg-slate-500 share-button bottom-2 mx-auto"
+                  onClick={sendMarkerData}
+                >
+                  Share your tags!
+                </button>
+              </div>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }

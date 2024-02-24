@@ -3,14 +3,10 @@ import "leaflet/dist/leaflet.css";
 import { useSharedState } from "../SharedContext.jsx";
 import { DeleteMarker } from "./Map";
 import { maxAmmountOfTags } from "./Map";
-import Map from "./Map";
-import Modal from "./Modal.jsx";
-import ButtonShareMarkers from "./ButtonShareMarkers.jsx";
-import HeaderAndLogo from "./HeaderAndLogo";
-import ButtonsForSavedTags from "./ButtonsMarker.jsx";
+import ViewMobileMain from "./ViewMobile";
+import ViewDesktopMain from "./ViewDesktop";
 
 function MainPage() {
-  const [mapArray, setMapArray] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
@@ -18,6 +14,7 @@ function MainPage() {
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
   const { sharedMarkers, setSharedMarkers } = useSharedState();
+  const { mapArray, setMapArray } = useSharedState();
 
   // Resize if phone window update
   useEffect(() => {
@@ -102,13 +99,11 @@ function MainPage() {
     setSharedMarkers((prevSharedMarkers) => {
       if (prevSharedMarkers.length === 0) return [];
 
-      // Create a new array by copying the previous state
       const updatedMarkers = [...prevSharedMarkers];
 
-      // Update the item at editIndex with new information
       updatedMarkers[editIndex] = {
         ...prevSharedMarkers[editIndex],
-        info: modalContent, // Assume modalContent contains the updated info
+        info: modalContent,
       };
 
       return updatedMarkers;
@@ -122,70 +117,20 @@ function MainPage() {
     setIsModalOpen(true);
   }
 
-  return (
-    <>
-      {isMobile ? (
-        <>
-          {/* Mobile version */}
-          {/* Pop-up Modal */}
-          <div className="main-container h-screen flex flex-col">
-            {/* Pop-up Modal */}
-            <Modal
-              isOpen={isModalOpen}
-              onClose={CloseModalWindow}
-              onSubmit={ModalEditSubmit}
-              content={modalContent}
-              setContent={setModalContent}
-            />
-            {/* Main site visual */}
-            <div className="flex-1 h-[100vh]">
-              {/* Render leaflet map */}
-              <Map onAddMark={handleMapClicks} />
-            </div>
-            {/* Bottom part */}
+  const viewProps = {
+    isModalOpen,
+    CloseModalWindow,
+    ModalEditSubmit,
+    modalContent,
+    setModalContent,
+    handleMapClicks,
+    mapArray,
+    markerIndex,
+    handleEditClick,
+    handleDeleteClick,
+  };
 
-            <ButtonsForSavedTags
-              mapArray={mapArray}
-              markerIndex={markerIndex}
-              handleEditClick={handleEditClick}
-              handleDeleteClick={handleDeleteClick}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          {/* PC */}
-          {/* Pop-up Modal */}
-          <Modal
-            isOpen={isModalOpen}
-            onClose={CloseModalWindow}
-            onSubmit={ModalEditSubmit}
-            content={modalContent}
-            setContent={setModalContent}
-          />
-          {/* Main site visual */}
-          <div className="main-container flex m-[2vh] rounded-lg h-[96vh] gap-4">
-            {/* Desktop-specific components */}
-            <div className="left-part w-1/3 bg-slate-700 rounded-lg ">
-              <HeaderAndLogo />
-              <ButtonsForSavedTags
-                mapArray={mapArray}
-                markerIndex={markerIndex}
-                handleEditClick={handleEditClick}
-                handleDeleteClick={handleDeleteClick}
-              />
-              <ButtonShareMarkers />
-            </div>
-
-            <div className="right-part md:w-2/3 rounded-lg">
-              {/* Render lealet map */}
-              <Map onAddMark={handleMapClicks} />
-            </div>
-          </div>
-        </>
-      )}
-    </>
-  );
+  return isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />;
 }
 
 export default MainPage;

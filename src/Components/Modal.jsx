@@ -12,8 +12,6 @@ const Modal = ({ isOpen, onClose, onSubmit, content, setContent }) => {
       inputRef.current.focus();
     }
     setContenter(content);
-
-    console.log(contenter);
   }, [isOpen, content]);
 
   if (!isOpen) return null;

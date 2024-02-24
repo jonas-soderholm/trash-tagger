@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool.js");
+const pool = require("./Pool");
 
 router.post("/", (req, res) => {
   // Assuming req.body is an array of marker objects
@@ -32,19 +32,6 @@ router.post("/", (req, res) => {
     );
   });
 });
-
-// router.get("/", (req, res) => {
-//   pool.query("SELECT * FROM MarkerInformation", (error, results) => {
-//     if (error) {
-//       console.error("Database error:", error);
-//       return res.status(500).json({ error: "Internal Server Error", details: error.message });
-//     }
-//     if (results.length === 0) {
-//       return res.status(200).json({ message: "No marker information found" });
-//     }
-//     res.json(results);
-//   });
-// });
 
 // Handle GET request for retrieving marker information by groupId
 router.get("/:groupId", (req, res) => {

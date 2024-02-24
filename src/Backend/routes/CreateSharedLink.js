@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool.js");
+const pool = require("./Pool");
 
 router.get("/", (req, res) => {
   const { groupId } = req.query;

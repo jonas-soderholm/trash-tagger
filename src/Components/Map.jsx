@@ -88,9 +88,6 @@ const Map = React.memo(({ onAddMark }) => {
       // // Add a marker for the shared location
       if (isSharedLink && mapRef.current) {
         sharedMarkers.forEach((marker, i) => {
-          console.log("Shared markers on map: ", sharedMarkers);
-          //const { latitude, longitude, tagInformation } = marker;
-
           const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
             center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
              font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
@@ -125,7 +122,7 @@ const Map = React.memo(({ onAddMark }) => {
 
     if (!modalContent.trim()) {
       console.log("Content is empty, not submitting.");
-      return; // Exit the function to prevent further action
+      return;
     }
 
     if (markerPosition) {
@@ -161,14 +158,6 @@ const Map = React.memo(({ onAddMark }) => {
       handleCloseModal();
     }
   };
-
-  useEffect(() => {
-    console.log(newSharingObject);
-  }, [newSharingObject]);
-
-  useEffect(() => {
-    console.log(sharedMarkers);
-  }, [sharedMarkers]);
 
   return (
     <>

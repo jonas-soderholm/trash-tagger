@@ -19,6 +19,7 @@ export const SharedStateProvider = ({ children }) => {
   const [newSharingObject, setNewSharingObject] = useState({});
   const [tagInformation, setTagInformation] = useState({});
   const [markersLoaded, setMarkersLoaded] = useState(false);
+  const [mapArray, setMapArray] = useState([]);
 
   return (
     <MarkerStateContext.Provider
@@ -47,6 +48,8 @@ export const SharedStateProvider = ({ children }) => {
         setTagInformation,
         markersLoaded,
         setMarkersLoaded,
+        mapArray,
+        setMapArray,
       }}
     >
       {children}
