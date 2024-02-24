@@ -22,19 +22,6 @@ function MainPage() {
 
   const { isSharedLink, setIsSharedLink } = useSharedState();
 
-  // Check if the user is accessing the page through a shared link
-  const checkSharedLink = () => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const isShared = !queryParams.has("markerId");
-    setIsSharedLink(!isShared);
-    console.log("Is Shared: ", isShared);
-  };
-
-  // Call checkSharedLink when the component mounts
-  useEffect(() => {
-    checkSharedLink();
-  }, [isSharedLink]);
-
   // Resize if phone window update
   useEffect(() => {
     function handleResize() {

@@ -2,27 +2,24 @@ const express = require("express");
 const router = express.Router();
 const pool = require("./Pool");
 
-router.post("/", async (req, res) => {
-  const { markerIds } = req.body; // Expect an array of marker IDs to be shared
+// GET request to fetch marker information by groupId
+router.get("/", (req, res) => {
+  const { groupId } = req.query;
 
-  try {
-    // Insert a new entry into SharedLinks and get the linkId
-    const [linkResult] = await pool.promise().query("INSERT INTO SharedLinks (createdAt) VALUES (NOW())");
-    const linkId = linkResult.insertId;
-
-    // For each markerId, insert a row into LinkMarkers linking it to the created linkId
-    await Promise.all(
-      markerIds.map((markId) =>
-        pool.promise().query("INSERT INTO LinkMarkers (linkId, markId) VALUES (?, ?)", [linkId, markId])
-      )
-    );
-
-    // Return the URL containing the linkId as a part of the shareable link
-    res.json({ link: `http://localhost:3000/shared-markers/${linkId}` });
-  } catch (error) {
-    console.error("Error creating shared link:", error);
-    res.status(500).json({ error: "Failed to create shared link." });
+  if (!groupId) {
+    return res.status(400).json({ error: "groupId parameter is required" });
   }
+
+  pool.query("SELECT * FROM MarkerInformation WHERE groupId = ?", [groupId], (error, results) => {
+    if (error) {
+      console.error("Database error:", error);
+      return res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "No marker information found for the provided groupId" });
+    }
+    res.json(results);
+  });
 });
 
 module.exports = router;

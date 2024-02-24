@@ -100,7 +100,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
                 : sharedMarkers.map((marker, index) => (
                     <EditAndDeleteButtonActions
                       key={index}
-                      info={`${index + 1}: ${marker.info}`}
+                      info={`${index + 1}: ${marker.markerInformation}`}
                       index={index}
                       handleEditClick={handleEditClick}
                       handleDeleteClick={handleDeleteClick}

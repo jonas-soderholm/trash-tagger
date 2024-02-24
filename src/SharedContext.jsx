@@ -14,7 +14,7 @@ export const SharedStateProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [editIndex, setEditIndex] = useState(0);
-  const [isSharedLink, setIsSharedLink] = useState(false);
+  const [isSharedLink, setIsSharedLink] = useState(true);
   const [sharedMarkers, setSharedMarkers] = useState([]);
   const [newSharingObject, setNewSharingObject] = useState({});
   const [tagInformation, setTagInformation] = useState({});

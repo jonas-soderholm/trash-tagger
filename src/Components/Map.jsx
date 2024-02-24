@@ -14,8 +14,8 @@ export function DeleteMarker(markers, setMarker, index) {
   }
 }
 
-export function createNewSharableMarker(lat, long, info) {
-  return { latitude: lat, longitude: long, info: info };
+export function createNewSharableMarker(_, lat, long, info) {
+  return { id: 0, latitude: lat, longitude: long, info: info };
 }
 
 const Map = React.memo(({ onAddMark }) => {
@@ -141,7 +141,7 @@ const Map = React.memo(({ onAddMark }) => {
       setModalContent(modalContent);
 
       // Sharing object DB
-      const newShareTemp = createNewSharableMarker(markerPosition.lat, markerPosition.lng, modalContent);
+      const newShareTemp = createNewSharableMarker(0, markerPosition.lat, markerPosition.lng, modalContent);
       setNewSharingObject(newShareTemp);
       setSharedMarkers((prevSharedMarkers) => [...prevSharedMarkers, newShareTemp]);
 
