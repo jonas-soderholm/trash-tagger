@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function BackendTesting() {
   const { sharedMarkers, setSharedMarkers } = useSharedState();
+  const { isSharedLink, setIsSharedLink } = useSharedState();
 
   const fetchMarkerInformation = async () => {
     try {
@@ -27,6 +28,8 @@ function BackendTesting() {
       ...marker,
       groupId: uuidMarkers,
     }));
+
+    console.log(uuidMarkers);
 
     try {
       const response = await fetch("http://localhost:3100/MarkerInformation", {
@@ -62,6 +65,8 @@ function BackendTesting() {
       const data = await response.json();
       console.log("Group Markers Data:", data);
       setSharedMarkers(data);
+      setIsSharedLink(true);
+
       // Here you would typically update your state with the fetched data
       // setSharedMarkers(data.markers); // Assuming data.markers is the array of markers
     } catch (error) {
@@ -71,12 +76,11 @@ function BackendTesting() {
 
   // useEffect hook to check URL for groupId and fetch group markers if present
   useEffect(() => {
-    console.log("Lll");
     const queryParams = new URLSearchParams(window.location.search);
     const groupId = queryParams.get("groupId");
+
     if (groupId) {
       fetchGroupMarkers(groupId);
-      console.log("Is Shared Link: ", true);
     }
   }, []);
 

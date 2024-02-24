@@ -12,9 +12,10 @@ export const SharedStateProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editButtonActive, setEditButtonActive] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalContent, setModalContent] = useState();
   const [editIndex, setEditIndex] = useState(0);
-  const [isSharedLink, setIsSharedLink] = useState(true);
+  const [isSharedLink, setIsSharedLink] = useState(false);
+  const [markersLoaded, setMarkersLoaded] = useState(false);
   const [sharedMarkers, setSharedMarkers] = useState([]);
   const [newSharingObject, setNewSharingObject] = useState({});
   const [tagInformation, setTagInformation] = useState({});

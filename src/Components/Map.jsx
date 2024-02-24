@@ -40,6 +40,7 @@ const Map = React.memo(({ onAddMark }) => {
     }
   }, [isModalOpen]);
 
+  // Initialize map
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
       mapRef.current = L.map(containerId.current);
@@ -47,43 +48,52 @@ const Map = React.memo(({ onAddMark }) => {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
 
-      // Zoom in on user when chosen allow on gps
-      //mapRef.current.locate({ setView: true, maxZoom: 16 });
+      //Zoom in on user when chosen allow on gps
+      mapRef.current.locate({ setView: true, maxZoom: 16 });
 
-      // mapRef.current.on("locationfound", function (e) {
-      //   const { lat, lng } = e.latlng;
-      //   const userLocation = [59.5099648, 17.8847744];
-      //   setCenter(userLocation);
-      //   const userLatLng = L.latLng(59.5099648, 17.8847744);
-      //   mapRef.current.setView(userLocation, zoom);
-      // });
-
-      // Testing purpose only removes check my location
-      const userLatLng = L.latLng(59.5099648, 17.8847744);
-      mapRef.current.setView(userLatLng, zoom);
-      ///////
-
-      mapRef.current.on("click", function (e) {
-        setMarkerIndex((prevIndex) => {
-          if (prevIndex < maxAmmountOfTags) {
-            setIsModalOpen(true);
-          }
-          setMarkerPosition(e.latlng);
-
-          return prevIndex;
+      // Set user position
+      if (!isSharedLink) {
+        mapRef.current.on("locationfound", function (e) {
+          const { lat, lng } = e.latlng;
+          const userLocation = [lat, lng];
+          setCenter(userLocation);
+          //const userLatLng = L.latLng(59.5099648, 17.8847744);
+          //const userLatLng = userLocation;
+          mapRef.current.setView(userLocation, zoom);
         });
-      });
+      } else if (isSharedLink && sharedMarkers.length > 0) {
+        const latitude = sharedMarkers[0].latitude; // or any other index or logic to select a marker
+        const longitude = sharedMarkers[0].longitude;
+        const userLocation = [latitude, longitude];
+        setCenter(userLocation);
+        mapRef.current.setView(userLocation, zoom);
+      }
+
+      // User clicks on map
+      if (!isSharedLink) {
+        mapRef.current.on("click", function (e) {
+          setMarkerIndex((prevIndex) => {
+            if (prevIndex < maxAmmountOfTags) {
+              setIsModalOpen(true);
+            }
+            setMarkerPosition(e.latlng);
+
+            return prevIndex;
+          });
+        });
+      }
 
       // // Add a marker for the shared location
-
-      if (isSharedLink && sharedMarkers && sharedMarkers.length > 0 && mapRef.current) {
+      if (isSharedLink && mapRef.current) {
         sharedMarkers.forEach((marker, i) => {
-          const { latitude, longitude, tagInformation } = marker;
+          console.log("Shared markers on map: ", sharedMarkers);
+          //const { latitude, longitude, tagInformation } = marker;
+
           const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
-          center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
-           font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
-           translateX(${-20}px) translateY(${-20}px);">${i + 1}</div>`;
-          L.marker([latitude, longitude], {
+            center; color: #e5e7eb; background-color: rgb(51 65 85); padding: 30px;
+             font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
+             translateX(${-20}px) translateY(${-20}px);">${i + 1}</div>`;
+          L.marker([marker.latitude, marker.longitude], {
             icon: L.divIcon({
               className: "",
               html: markerHtml,
@@ -100,13 +110,14 @@ const Map = React.memo(({ onAddMark }) => {
         mapRef.current = null;
       }
     };
-  }, [zoom, setMarkerIndex]);
+  }, [zoom, setMarkerIndex, isSharedLink]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setModalContent("");
   };
 
+  // Handle user click on map
   const handleSubmit = (e) => {
     e.preventDefault();
 

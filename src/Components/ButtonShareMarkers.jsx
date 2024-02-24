@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useSharedState } from "../SharedContext.jsx";
 
-function ShareMarkersButton() {
+function ButtonShareMarkers() {
   const { sharedMarkers } = useSharedState();
 
   const handleClick = async () => {};
@@ -19,4 +19,4 @@ function ShareMarkersButton() {
   );
 }
 
-export default ShareMarkersButton;
+export default ButtonShareMarkers;

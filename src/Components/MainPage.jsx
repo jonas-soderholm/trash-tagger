@@ -6,9 +6,9 @@ import { maxAmmountOfTags } from "./Map";
 import Map from "./Map";
 import Modal from "./Modal.jsx";
 import BackendTesting from "./BackendTesting.jsx";
-import ShareMarkersButton from "./ShareMarkersButton.jsx";
+import ButtonShareMarkers from "./ButtonShareMarkers.jsx";
 import HeaderAndLogo from "./HeaderAndLogo";
-import ButtonsForSavedTags from "./ButtonsForSavedTags";
+import ButtonsForSavedTags from "./ButtonsMarker.jsx";
 
 function MainPage() {
   const [mapArray, setMapArray] = useState([]);
@@ -19,8 +19,6 @@ function MainPage() {
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
   const { sharedMarkers, setSharedMarkers } = useSharedState();
-
-  const { isSharedLink, setIsSharedLink } = useSharedState();
 
   // Resize if phone window update
   useEffect(() => {
@@ -84,13 +82,8 @@ function MainPage() {
   }
 
   function handleMapClicks(index, info) {
-    // AddMarkerInformationOnClick(index, info);
     setMapArray((prevMapArray) => [...prevMapArray, info]);
   }
-
-  // function AddMarkerInformationOnClick(index, info) {
-  //   setMapArray((prevMapArray) => [...prevMapArray, info]);
-  // }
 
   function CloseModalWindow() {
     setIsModalOpen(false);
@@ -182,7 +175,7 @@ function MainPage() {
                 handleEditClick={handleEditClick}
                 handleDeleteClick={handleDeleteClick}
               />
-              <ShareMarkersButton />
+              <ButtonShareMarkers />
               <BackendTesting />
             </div>
 

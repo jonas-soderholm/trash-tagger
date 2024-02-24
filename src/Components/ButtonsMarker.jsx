@@ -1,5 +1,5 @@
 import React from "react";
-import EditAndDeleteButtonActions from "./EditAndDeleteButtonActions";
+import ButtonsEditDelete from "./ButtonsEditDelete.jsx";
 import { useSharedState } from "../SharedContext.jsx";
 
 function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDeleteClick }) {
@@ -39,7 +39,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
                 </div>
               )}
             </div>
-            {/* Current tags / Click map */}
+            {/* Current marker counter*/}
             <div
               className={`header-mobile text-2xl -mt-1 text-slate-200 text-center body-font ${
                 mapArray.length === 0 ? "animation-tags-header-mobile" : "hidden"
@@ -55,7 +55,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
             >
               {!isSharedLink
                 ? mapArray.map((names, index) => (
-                    <EditAndDeleteButtonActions
+                    <ButtonsEditDelete
                       key={index}
                       info={index + 1 + ": " + names}
                       index={index}
@@ -64,9 +64,9 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
                     />
                   ))
                 : sharedMarkers.map((marker, index) => (
-                    <EditAndDeleteButtonActions
+                    <ButtonsEditDelete
                       key={index}
-                      info={`${index + 1}: ${marker.info}`}
+                      info={`${index + 1}: ${marker.markerInformation}`}
                       index={index}
                       handleEditClick={handleEditClick}
                       handleDeleteClick={handleDeleteClick}
@@ -77,7 +77,6 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
         </>
       ) : (
         <>
-          {" "}
           <div
             className={`animation-tags-header text-2xl my-auto py-5 text-slate-200 text-center body-font ${
               mapArray.length === 0 ? "" : "no-animation"
@@ -89,7 +88,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
             <div className="button-container-1 maps overflow-x-hidden text-1xl rounded-sm button-container-color max-h-[20rem] mx-5 text-slate-200">
               {!isSharedLink
                 ? mapArray.map((names, index) => (
-                    <EditAndDeleteButtonActions
+                    <ButtonsEditDelete
                       key={index}
                       info={index + 1 + ": " + names}
                       index={index}
@@ -98,7 +97,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
                     />
                   ))
                 : sharedMarkers.map((marker, index) => (
-                    <EditAndDeleteButtonActions
+                    <ButtonsEditDelete
                       key={index}
                       info={`${index + 1}: ${marker.markerInformation}`}
                       index={index}
