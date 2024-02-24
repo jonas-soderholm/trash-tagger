@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool");
+const pool = require("./Pool.js");
 
-// GET request to fetch marker information by groupId
 router.get("/", (req, res) => {
   const { groupId } = req.query;
 

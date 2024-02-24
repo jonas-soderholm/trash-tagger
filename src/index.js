@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import MainPage from "./Components/MainPage";
-import BackendTesting from "./Components/BackendTesting.jsx";
 import reportWebVitals from "./reportWebVitals";
 
 import { SharedStateProvider } from "./SharedContext.jsx";

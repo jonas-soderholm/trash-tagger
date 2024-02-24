@@ -29,6 +29,7 @@ const Map = React.memo(({ onAddMark }) => {
   const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { newSharingObject, setNewSharingObject } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { markersLoaded, setMarkersLoaded } = useSharedState();
 
   const [center, setCenter] = useState([0, 0]);
   const zoom = 15;
@@ -49,10 +50,11 @@ const Map = React.memo(({ onAddMark }) => {
       }).addTo(mapRef.current);
 
       //Zoom in on user when chosen allow on gps
-      mapRef.current.locate({ setView: true, maxZoom: 16 });
 
       // Set user position
-      if (!isSharedLink) {
+      if (!isSharedLink && markersLoaded) {
+        mapRef.current.locate({ setView: true, maxZoom: 16 });
+
         mapRef.current.on("locationfound", function (e) {
           const { lat, lng } = e.latlng;
           const userLocation = [lat, lng];
@@ -62,7 +64,7 @@ const Map = React.memo(({ onAddMark }) => {
           mapRef.current.setView(userLocation, zoom);
         });
       } else if (isSharedLink && sharedMarkers.length > 0) {
-        const latitude = sharedMarkers[0].latitude; // or any other index or logic to select a marker
+        const latitude = sharedMarkers[0].latitude;
         const longitude = sharedMarkers[0].longitude;
         const userLocation = [latitude, longitude];
         setCenter(userLocation);
@@ -110,7 +112,7 @@ const Map = React.memo(({ onAddMark }) => {
         mapRef.current = null;
       }
     };
-  }, [zoom, setMarkerIndex, isSharedLink]);
+  }, [zoom, setMarkerIndex, isSharedLink, markersLoaded]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);

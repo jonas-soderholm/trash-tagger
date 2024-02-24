@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool");
+const pool = require("./Pool.js");
 
 router.post("/", (req, res) => {
   // Assuming req.body is an array of marker objects

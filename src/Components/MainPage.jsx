@@ -5,7 +5,6 @@ import { DeleteMarker } from "./Map";
 import { maxAmmountOfTags } from "./Map";
 import Map from "./Map";
 import Modal from "./Modal.jsx";
-import BackendTesting from "./BackendTesting.jsx";
 import ButtonShareMarkers from "./ButtonShareMarkers.jsx";
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonsForSavedTags from "./ButtonsMarker.jsx";
@@ -176,7 +175,6 @@ function MainPage() {
                 handleDeleteClick={handleDeleteClick}
               />
               <ButtonShareMarkers />
-              <BackendTesting />
             </div>
 
             <div className="right-part md:w-2/3 rounded-lg">
