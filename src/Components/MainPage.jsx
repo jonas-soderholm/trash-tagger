@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { useSharedState } from "../SharedContext.jsx";
+import { Routes, Route } from "react-router-dom";
 import { DeleteMarker } from "./Map";
 import { maxAmmountOfTags } from "./Map";
 import ViewMobileMain from "./ViewMobile";
 import ViewDesktopMain from "./ViewDesktop";
 import LoginForm from "./LoginForm";
+import NotFoundPage from "./NotFoundPage";
 
 function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +18,8 @@ function MainPage() {
   const { isMobile, setIsMobile } = useSharedState();
   const { /*sharedMarkers,*/ setSharedMarkers } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { isSharedLink, setIsSharedLink } = useSharedState();
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
@@ -102,8 +106,23 @@ function MainPage() {
     handleDeleteClick,
   };
 
-  //return <LoginForm />;
-  return isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />;
+  if (!isLoggedIn && !isSharedLink) {
+    return <LoginForm />;
+  }
+
+  return (
+    <Routes>
+      <Route path="/" element={isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />} />
+
+      <Route
+        path="/shared-markers"
+        element={isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />}
+      />
+
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  );
+  //return isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />;
 }
 
 export default MainPage;

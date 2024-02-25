@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSharedState } from "../SharedContext.jsx";
 
 function ScreenSettings() {
+  const { mapArray, setMapArray } = useSharedState([]);
   const { isMobile, setIsMobile } = useSharedState();
 
   // Check if user wants to leave page or not
   useEffect(() => {
+    if (mapArray.length === 0) {
+      return;
+    }
+
     const handleBeforeUnload = (e) => {
       // Cancel the event as stated by the standard.
       e.preventDefault();
@@ -19,7 +24,7 @@ function ScreenSettings() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [mapArray]);
 
   // Resize if phone window update
   useEffect(() => {

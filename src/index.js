@@ -4,6 +4,7 @@ import "./index.css";
 import MainPage from "./Components/MainPage";
 import ScreenSettings from "./Components/ScreenSettings";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { SharedStateProvider } from "./SharedContext.jsx";
 
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <SharedStateProvider>
-      <MainPage />
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>
       <ScreenSettings />
     </SharedStateProvider>
   </React.StrictMode>
