@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import MainPage from "./Components/MainPage";
+import ScreenSettings from "./Components/ScreenSettings";
 import reportWebVitals from "./reportWebVitals";
 
 import { SharedStateProvider } from "./SharedContext.jsx";
@@ -12,6 +13,7 @@ root.render(
   <React.StrictMode>
     <SharedStateProvider>
       <MainPage />
+      <ScreenSettings />
     </SharedStateProvider>
   </React.StrictMode>
 );

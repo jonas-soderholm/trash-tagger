@@ -45,24 +45,28 @@ const Map = React.memo(({ onAddMark }) => {
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
       mapRef.current = L.map(containerId.current);
+      mapRef.current.setView([0, 0], 3);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
 
-      //Zoom in on user when chosen allow on gps
-
-      // Set user position
       if (!isSharedLink && markersLoaded) {
-        mapRef.current.locate({ setView: true, maxZoom: 16 });
+        const successCallback = (position) => {
+          const { latitude, longitude } = position.coords;
+          setCenter([latitude, longitude]);
+          mapRef.current.setView([latitude, longitude], zoom);
+          console.log("GPS location found");
+        };
 
-        mapRef.current.on("locationfound", function (e) {
-          const { lat, lng } = e.latlng;
-          const userLocation = [lat, lng];
-          setCenter(userLocation);
-          //const userLatLng = L.latLng(59.5099648, 17.8847744);
-          //const userLatLng = userLocation;
-          mapRef.current.setView(userLocation, zoom);
+        mapRef.current.on("locationerror", function (e) {
+          console.error("Location error:", e.message);
         });
+
+        const errorCallback = (error) => {
+          console.error("Location error:", error.message);
+        };
+
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { timeout: 10000 });
       } else if (isSharedLink && sharedMarkers.length > 0) {
         const latitude = sharedMarkers[0].latitude;
         const longitude = sharedMarkers[0].longitude;
@@ -161,7 +165,9 @@ const Map = React.memo(({ onAddMark }) => {
 
   return (
     <>
-      <div id={containerId.current} style={{ height: "100vh", width: "100%" }}></div>
+      {/* Map */}
+      <div className=" md:rounded-xl" id={containerId.current} style={{ height: "95.7vh", width: "100%" }}></div>
+      {/* Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

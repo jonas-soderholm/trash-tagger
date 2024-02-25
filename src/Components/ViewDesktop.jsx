@@ -26,8 +26,8 @@ const ViewDesktopMain = ({
       content={modalContent}
       setContent={setModalContent}
     />
-    <div className="main-container flex m-[2vh] rounded-lg h-[96vh] gap-4">
-      <div className="left-part w-1/3 bg-slate-700 rounded-lg">
+    <div className="main-container flex m-[2vh] h-[96vh] gap-4">
+      <div className="left-part w-1/3 background-color rounded-xl">
         <HeaderAndLogo />
         <ButtonsMarker
           mapArray={mapArray}
@@ -37,7 +37,10 @@ const ViewDesktopMain = ({
         />
         <ButtonShareMarkers />
       </div>
-      <div className="right-part md:w-2/3 rounded-lg">
+      <div className="right-part flex md:w-2/3 items-center rounded-lg">
+        <button className="sign-out-button absolute button-container-color z-[1005] top-0 rounded-sm body-font right-0 m-8 items-center text-center p-[6px] text-[12px]">
+          Sign Out
+        </button>
         <Map onAddMark={handleMapClicks} />
       </div>
     </div>

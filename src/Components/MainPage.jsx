@@ -5,6 +5,7 @@ import { DeleteMarker } from "./Map";
 import { maxAmmountOfTags } from "./Map";
 import ViewMobileMain from "./ViewMobile";
 import ViewDesktopMain from "./ViewDesktop";
+import LoginForm from "./LoginForm";
 
 function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,37 +14,8 @@ function MainPage() {
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { isMobile, setIsMobile } = useSharedState();
-  const { sharedMarkers, setSharedMarkers } = useSharedState();
+  const { /*sharedMarkers,*/ setSharedMarkers } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
-
-  // Resize if phone window update
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth <= 768);
-    }
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
-
-  // Resize inner window for mobile
-  useEffect(() => {
-    const adjustHeight = () => {
-      // Only adjust height if on mobile
-      if (isMobile) {
-        const mainContainer = document.querySelector(".main-container");
-        if (mainContainer) {
-          mainContainer.style.height = `${window.innerHeight}px`;
-        }
-      }
-    };
-
-    adjustHeight();
-    window.addEventListener("resize", adjustHeight);
-    return () => window.removeEventListener("resize", adjustHeight);
-  });
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
@@ -130,6 +102,7 @@ function MainPage() {
     handleDeleteClick,
   };
 
+  //return <LoginForm />;
   return isMobile ? <ViewMobileMain {...viewProps} /> : <ViewDesktopMain {...viewProps} />;
 }
 

@@ -29,7 +29,8 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #292929;
+  background-color: #262627;
+  /* background-image: url("/public/globe.png"); */
 }
 
 code {
@@ -56,6 +57,7 @@ code {
   font-style: normal;
 }
 
+/* Header */
 @keyframes headerAnimation-mobile {
   0% {
     font-size: 15px;
@@ -92,6 +94,7 @@ code {
   animation: none !important;
 }
 
+/* Buttons */
 .send-button-Mobile,
 .button-container-1-Mobile {
   opacity: 0;
@@ -117,15 +120,20 @@ code {
 }
 
 .tag-button-colors {
-  background-color: #7d7d86;
+  /* background-color: #7d7d86; */
+  background: linear-gradient(0deg, rgb(95, 95, 95), rgb(179, 179, 179));
+
   color: rgb(226 232 240);
 }
 
 .button-container-color {
   background-color: rgb(39, 43, 55);
+  background: linear-gradient(0deg, rgb(33, 33, 33), rgb(79, 79, 79));
+
   color: rgb(226 232 240);
 }
 
 .background-color {
-  background-color: rgb(51 65 85);
+  /* background-color: rgb(109, 109, 109); */
+  background: linear-gradient(0deg, rgb(59, 165, 211), rgba(10, 229, 245, 0.727), rgba(10, 245, 233, 0.727));
 }

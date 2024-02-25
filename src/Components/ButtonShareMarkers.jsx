@@ -81,7 +81,7 @@ function ButtonShareMarkers() {
               mapArray.length === 0 ? "hidden" : "visible"
             } text-xs px-2 text-center my-auto py-2 rounded-sm share-button-mobile`}
           >
-            Share your tags!
+            Share tags!
           </button>
         </>
       ) : (
@@ -90,10 +90,11 @@ function ButtonShareMarkers() {
             <>
               <div className="flex justify-center">
                 <button
-                  className="send-button body-font text-xl bg-opacity-50 backdrop-blur-xl flex px-5 py-4 rounded-full fixed mb-10 p4 hover:bg-slate-500 share-button bottom-2 mx-auto"
+                  className="send-button body-font text-xl bg-slate-500 backdrop-blur-xl flex px-5 py-4 rounded-full
+                   fixed mb-10 p4 hover:bg-slate-400 share-button bottom-2 mx-auto"
                   onClick={sendMarkerData}
                 >
-                  Share your tags!
+                  Share tags!
                 </button>
               </div>
             </>

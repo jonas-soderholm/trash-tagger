@@ -12,7 +12,7 @@ const ButtonsEditDelete = React.memo(({ info, index, handleEditClick, handleDele
       {isMobile ? (
         <>
           {/* Info about markers on buttons */}
-          <div className="button flex flex-col justify-between cursor-pointer gap-2 m-3 p-3 tag-button-colors relative">
+          <div className="button flex flex-col rounded-sm justify-between cursor-pointer gap-2 m-3 p-3 tag-button-colors relative">
             <div className={`button-${index} flex-1 break-words mr-20`}>{info}</div>
             {/* No edit or delete button for shared links */}
             {!isSharedLink && (

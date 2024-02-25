@@ -15,19 +15,17 @@ function ButtonsMarker({ mapArray, markerIndex, handleEditClick, handleDeleteCli
       {isMobile ? (
         <>
           <div className="button-container-2 background-color overflow-hidden mx-auto gap-2 p-2 w-full h-[15rem] flex flex-col items-center">
-            <div className="flex">
-              {/* Share button */}
+            <div className="flex items-center">
               <ButtonShareMarkers />
-              {/* TrashTaggerLogo */}
               <HeaderAndLogo />
             </div>
             {/* Current marker counter*/}
             <div
-              className={`header-mobile text-2xl -mt-1 text-slate-200 text-center body-font ${
+              className={`text-2xl -mt-8 text-slate-200 text-center body-font ${
                 mapArray.length >= 0 && sharedMarkers.length === 0 ? "animation-tags-header-mobile" : "hidden"
               }`}
             >
-              {mapArray.length == 0 ? "" : "Click on the map to tag trash"}
+              {mapArray.length !== 0 ? "" : "Click on the map to tag trash"}
             </div>
             {/* Marker buttons container*/}
             <div

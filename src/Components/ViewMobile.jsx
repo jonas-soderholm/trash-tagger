@@ -25,6 +25,9 @@ const ViewMobileMain = ({
       setContent={setModalContent}
     />
     {/* Additional mobile-specific layout and components */}
+    <button className="sign-out-button absolute button-container-color z-[1005] top-0 rounded-sm body-font right-0 m-3 items-center text-center p-[6px] text-[12px]">
+      Sign Out
+    </button>
     <Map onAddMark={handleMapClicks} />
     <ButtonsMarker
       mapArray={mapArray}
