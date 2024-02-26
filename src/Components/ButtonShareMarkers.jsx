@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSharedState } from "../SharedContext.jsx";
 import { v4 as uuidv4 } from "uuid";
 
@@ -9,11 +9,13 @@ function ButtonShareMarkers() {
   const { isMobile, setIsMobile } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
 
-  // Send markers and generate new sharable link based on those
+  // State for managing modal visibility and the shareable link
+  const [showModal, setShowModal] = useState(false);
+  const [shareableLink, setShareableLink] = useState("");
+
   const sendMarkerData = async () => {
     const uuidMarkers = uuidv4();
-
-    const updatedUuidMarkers = sharedMarkers.map((marker, index) => ({
+    const updatedUuidMarkers = sharedMarkers.map((marker) => ({
       ...marker,
       groupId: uuidMarkers,
     }));
@@ -33,15 +35,17 @@ function ButtonShareMarkers() {
 
       console.log("Marker data sent successfully");
 
-      // Construct the sharable link with the groupId
-      const shareableLink = `http://localhost:3000/shared-markers?groupId=${uuidMarkers}`;
-      console.log("Shareable link:", shareableLink);
+      // Update the shareable link state and show the modal
+      const link = `http://localhost:3000/shared-markers?groupId=${uuidMarkers}`;
+      setShareableLink(link);
+      console.log(shareableLink);
+
+      setShowModal(true); // Show the modal with the link
     } catch (error) {
       console.error("Error sending marker data:", error);
     }
   };
 
-  // Function to fetch group markers
   const fetchGroupMarkers = async (groupId) => {
     const url = `http://localhost:3100/shared-markers?groupId=${groupId}`;
     try {
@@ -50,7 +54,6 @@ function ButtonShareMarkers() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      //console.log("Group Markers Data:", data);
       setSharedMarkers(data);
       setIsSharedLink(true);
       setMarkersLoaded(true);
@@ -59,7 +62,6 @@ function ButtonShareMarkers() {
     }
   };
 
-  // useEffect hook to check URL for groupId and fetch group markers if present
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const groupId = queryParams.get("groupId");
@@ -71,8 +73,52 @@ function ButtonShareMarkers() {
     }
   }, []);
 
+  // Function to copy the shareable link to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareableLink).then(
+      () => {
+        // Optional: Display a message or change button text/state to indicate the link was copied
+        console.log("Link copied to clipboard!");
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
+  // Modal
+  const ShareModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1007] ">
+      <div className="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+        <p>Here's your shareable link:</p>
+        <input
+          type="text"
+          readOnly
+          value={shareableLink}
+          className="text-center p-2 border border-gray-300 rounded mt-2"
+          onClick={(e) => e.target.select()}
+        />
+        <div className="flex gap-3 mt-3">
+          <button
+            className="px-4 py-2 my-auto  bg-blue-500 text-white rounded hover:bg-blue-700"
+            onClick={copyToClipboard}
+          >
+            Copy
+          </button>
+          <button
+            className="px-4 py-2 my-auto  bg-blue-500 text-white rounded hover:bg-blue-700"
+            onClick={() => setShowModal(false)}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
+      {showModal && <ShareModal />}
       {isMobile ? (
         <>
           <button
@@ -87,17 +133,14 @@ function ButtonShareMarkers() {
       ) : (
         <>
           {!isSharedLink && (
-            <>
-              <div className="flex justify-center">
-                <button
-                  className="send-button body-font text-xl bg-slate-500 backdrop-blur-xl flex px-5 py-4 rounded-full
-                   fixed mb-10 p4 hover:bg-slate-400 share-button bottom-2 mx-auto"
-                  onClick={sendMarkerData}
-                >
-                  Share tags!
-                </button>
-              </div>
-            </>
+            <div className="flex justify-center">
+              <button
+                className="send-button body-font text-xl bg-slate-500 backdrop-blur-xl flex px-5 py-4 rounded-full fixed mb-10 p4 hover:bg-slate-400 share-button bottom-2 mx-auto"
+                onClick={sendMarkerData}
+              >
+                Share tags!
+              </button>
+            </div>
           )}
         </>
       )}

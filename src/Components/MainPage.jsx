@@ -21,6 +21,16 @@ function MainPage() {
   const { isSharedLink, setIsSharedLink } = useSharedState();
   const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
+  useEffect(() => {
+    // Check if the URL includes "share" to determine if it's a shared link
+    const checkIfSharedLink = () => {
+      const urlContainsShare = window.location.href.includes("shared-markers?groupId");
+      setIsSharedLink(urlContainsShare);
+    };
+
+    checkIfSharedLink();
+  }, [setIsSharedLink]);
+
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
     newArray.splice(index, 1);
@@ -106,7 +116,9 @@ function MainPage() {
     handleDeleteClick,
   };
 
-  if (!isLoggedIn) {
+  console.log(isSharedLink);
+
+  if (!isLoggedIn && !isSharedLink) {
     return <LoginForm />;
   }
 

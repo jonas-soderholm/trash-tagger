@@ -77,7 +77,7 @@ const Map = React.memo(({ onAddMark }) => {
       }
 
       // User clicks on map
-      if (isSharedLink) {
+      if (!isSharedLink) {
         mapRef.current.on("click", function (e) {
           setMarkerIndex((prevIndex) => {
             if (prevIndex < maxAmmountOfTags) {
