@@ -21,6 +21,7 @@ export const SharedStateProvider = ({ children }) => {
   const [markersLoaded, setMarkersLoaded] = useState(false);
   const [mapArray, setMapArray] = useState([]);
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <MarkerStateContext.Provider
@@ -53,6 +54,8 @@ export const SharedStateProvider = ({ children }) => {
         setMapArray,
         rememberMe,
         setRememberMe,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children}

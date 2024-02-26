@@ -30,6 +30,7 @@ const Map = React.memo(({ onAddMark }) => {
   const { newSharingObject, setNewSharingObject } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
   const { markersLoaded, setMarkersLoaded } = useSharedState();
+  const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
   const [center, setCenter] = useState([0, 0]);
   const zoom = 15;
@@ -66,7 +67,7 @@ const Map = React.memo(({ onAddMark }) => {
           console.error("Location error:", error.message);
         };
 
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { timeout: 10000 });
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { timeout: 20000 });
       } else if (isSharedLink && sharedMarkers.length > 0) {
         const latitude = sharedMarkers[0].latitude;
         const longitude = sharedMarkers[0].longitude;
@@ -76,7 +77,7 @@ const Map = React.memo(({ onAddMark }) => {
       }
 
       // User clicks on map
-      if (!isSharedLink) {
+      if (isSharedLink) {
         mapRef.current.on("click", function (e) {
           setMarkerIndex((prevIndex) => {
             if (prevIndex < maxAmmountOfTags) {
@@ -113,7 +114,7 @@ const Map = React.memo(({ onAddMark }) => {
         mapRef.current = null;
       }
     };
-  }, [zoom, setMarkerIndex, isSharedLink, markersLoaded]);
+  }, [zoom, setMarkerIndex, isSharedLink, markersLoaded, isLoggedIn]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);

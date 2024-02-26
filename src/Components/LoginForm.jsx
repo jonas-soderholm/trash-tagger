@@ -18,16 +18,17 @@ const LoginForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
   return (
     <div className="bg-gray flex items-center justify-center h-screen w-full px-5 sm:px-0">
-      <div className="flex bg-white rounded-lg shadow-lg border overflow-hidden max-w-sm lg:max-w-4xl w-full">
+      <div className="flex bg-white rounded-lg shadow-2xl border overflow-hidden max-w-sm lg:max-w-4xl w-full">
         <div className="lg:w-1/2 bg-cover md:block hidden">
           <img src="./login.png " alt="" />
         </div>
         <div className=" w-full p-8 lg:w-1/2">
           <p className="signup-success-hidden text-xl text-gray-600 text-center">
-            {isForgetPassword ? "Forget Password" : isSignUp ? "Sign Up" : "Login"}
+            {isForgetPassword ? "Forgot Password?" : isSignUp ? "Sign Up" : "Login"}
           </p>
           {!isForgetPassword && (
             <>
@@ -119,7 +120,7 @@ const LoginForm = () => {
                           password,
                           confirmPassword
                         )
-                    : () => handleSignIn(setErrorMessage, email, password)
+                    : () => handleSignIn(setErrorMessage, email, password, setIsLoggedIn)
                 }
               >
                 {isForgetPassword ? "Reset Password" : isSignUp ? "Sign Up" : "Login"}

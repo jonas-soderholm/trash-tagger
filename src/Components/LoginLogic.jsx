@@ -1,4 +1,6 @@
-export const handleSignIn = (setErrorMessage, email, password) => {
+import { RegisterNewAccount, Login } from "./LoginHandlerBackend";
+
+export const handleSignIn = (setErrorMessage, email, password, setIsLoggedIn) => {
   if (!email || !password) {
     setErrorMessage("Email and password are required.");
     return;
@@ -8,8 +10,9 @@ export const handleSignIn = (setErrorMessage, email, password) => {
     return;
   }
   console.log(email);
-  setErrorMessage("Logged in");
-  setErrorMessage("null");
+  //setErrorMessage("Logged in");
+
+  Login(email, password, setIsLoggedIn, setErrorMessage);
 };
 
 export const toggleForm = (setIsSignUp, setIsForgetPassword, setErrorMessage) => {
@@ -54,6 +57,9 @@ export const handleSignUpSubmit = (
   setErrorMessage(null);
   SuccessSignUpVisuals();
   console.log("handleSubmit");
+  //console.log(email, password);
+
+  RegisterNewAccount(email, password);
 };
 
 export const handleForgetPassword = (email, setErrorMessage) => {

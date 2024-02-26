@@ -18,8 +18,8 @@ function MainPage() {
   const { isMobile, setIsMobile } = useSharedState();
   const { /*sharedMarkers,*/ setSharedMarkers } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
   function handleDeleteClick(_, index) {
     const newArray = [...mapArray];
@@ -106,7 +106,7 @@ function MainPage() {
     handleDeleteClick,
   };
 
-  if (!isLoggedIn && !isSharedLink) {
+  if (!isLoggedIn) {
     return <LoginForm />;
   }
 
