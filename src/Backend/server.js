@@ -17,9 +17,11 @@ app.use(express.static("/public"));
 
 const markerInformationRouter = require("./routes/MarkerInformation");
 const createSharedLinkRouter = require("./routes/CreateSharedLink");
+const emailSenderRouter = require("./routes/EmailSender");
 
 app.use("/MarkerInformation", markerInformationRouter);
 app.use("/shared-markers", createSharedLinkRouter);
+app.use("/emailSender", emailSenderRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

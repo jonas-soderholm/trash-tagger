@@ -29,8 +29,8 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #262627;
-  /* background-image: url("/public/globe.png"); */
+  /* background-color: #262627; */
+  background-image: url("/public/globe.png");
 }
 
 code {

@@ -1,6 +1,15 @@
-export function handleLogin() {
-  console.log("Login clicked");
-  // Add logic to handle login
+export async function handleLogin() {
+  const fetchMail = "http://localhost:3100/emailSender";
+
+  try {
+    const response = await fetch(fetchMail);
+
+    if (!response.ok) {
+      console.log("failed to fetch");
+    }
+  } catch (error) {
+    console.log("error login");
+  }
 }
 
 export function handleSignUp() {

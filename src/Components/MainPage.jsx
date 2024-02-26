@@ -18,7 +18,7 @@ function MainPage() {
   const { isMobile, setIsMobile } = useSharedState();
   const { /*sharedMarkers,*/ setSharedMarkers } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { isSharedLink, setIsSharedLink } = useSharedState();
 
   function handleDeleteClick(_, index) {
