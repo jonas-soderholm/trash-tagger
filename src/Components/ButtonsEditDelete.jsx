@@ -45,14 +45,14 @@ const ButtonsEditDelete = React.memo(({ info, index, handleEditClick, handleDele
                 <div className="icons flex gap-4 text-lg absolute mt-[3px] transform right-4">
                   <div className="rounded-lg">
                     <div
-                      className="edit-icon hover:text-slate-700 pointer-events-auto"
+                      className="edit-icon hover:text-gray-600 pointer-events-auto"
                       onClick={() => handleEditClick(index)}
                     >
                       <FaEdit />
                     </div>
                   </div>
                   <div className="trash-can-icon" onClick={() => handleDeleteClick(info, index)}>
-                    <div className="hover:text-slate-700 pointer-events-auto">
+                    <div className="hover:text-gray-600 pointer-events-auto">
                       <FaTrash />
                     </div>
                   </div>

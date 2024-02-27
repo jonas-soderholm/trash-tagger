@@ -135,7 +135,8 @@ function ButtonShareMarkers() {
           {!isSharedLink && (
             <div className="flex justify-center">
               <button
-                className="send-button body-font text-xl bg-slate-500 backdrop-blur-xl flex px-5 py-4 rounded-full fixed mb-10 p4 hover:bg-slate-400 share-button bottom-2 mx-auto"
+                className="send-button body-font  text-xl backdrop-blur-xl flex px-5 py-4
+                 rounded-full fixed mb-10 p4 share-button bottom-2 mx-auto hover:bg-gray-400 "
                 onClick={sendMarkerData}
               >
                 Share tags!

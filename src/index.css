@@ -115,7 +115,7 @@ code {
 }
 
 .share-button {
-  /* background: #7d7d86; */
+  background: #64646b;
   color: rgb(226 232 240);
 }
 
@@ -135,5 +135,10 @@ code {
 
 .background-color {
   /* background-color: rgb(109, 109, 109); */
+  /* background: linear-gradient(0deg, rgb(59, 165, 211), rgba(10, 229, 245, 0.727), rgba(10, 245, 233, 0.727)); */
+  background: linear-gradient(0deg, rgb(43, 43, 43), rgb(100, 100, 100), rgb(145, 145, 145));
+}
+
+.markers-color {
   background: linear-gradient(0deg, rgb(59, 165, 211), rgba(10, 229, 245, 0.727), rgba(10, 245, 233, 0.727));
 }

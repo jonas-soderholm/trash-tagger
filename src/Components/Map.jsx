@@ -92,14 +92,15 @@ const Map = React.memo(({ onAddMark }) => {
 
       // // Add a marker for the shared location
       if (isSharedLink && mapRef.current) {
+        console.log(sharedMarkers);
         sharedMarkers.forEach((marker, i) => {
           const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
-            center; color: #e5e7eb; padding: 30px;
+            center; color: #e5e7eb; opacity: 92%; background: linear-gradient(0deg, rgb(33, 33, 33), rgb(79, 79, 79)); padding: 30px;
              font-size: 23px; border-radius: 100%; height: 100%; width: 100%; transform:
              translateX(${-20}px) translateY(${-20}px);">${i + 1}</div>`;
           L.marker([marker.latitude, marker.longitude], {
             icon: L.divIcon({
-              className: "",
+              className: "background-color my-custom-marker body-font",
               html: markerHtml,
             }),
           }).addTo(mapRef.current);
