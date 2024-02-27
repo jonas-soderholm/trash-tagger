@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-
+const rateLimit = require("express-rate-limit");
 const app = express();
+const helmet = require("helmet");
 const PORT = process.env.PORT || 3100;
 
 app.use(
@@ -12,6 +13,15 @@ app.use(
   })
 );
 
+app.use(helmet());
+
+// Define a rate limit rule
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 50, // limit each IP to 100 requests per window
+});
+
+app.use(apiLimiter);
 app.use(express.json());
 app.use(express.static("/public"));
 

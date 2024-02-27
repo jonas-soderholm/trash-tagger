@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("./Pool");
+const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
@@ -11,7 +12,11 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Email already exists" });
     }
 
-    await pool.promise().query("INSERT INTO users (email, password) VALUES (?, ?)", [email, password]);
+    // Hash the password
+    const saltRounds = 10; // You can adjust the cost factor as needed
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    await pool.promise().query("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword]);
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
