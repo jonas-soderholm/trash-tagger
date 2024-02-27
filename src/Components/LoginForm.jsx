@@ -120,7 +120,7 @@ const LoginForm = () => {
                           password,
                           confirmPassword
                         )
-                    : () => handleSignIn(setErrorMessage, email, password, setIsLoggedIn)
+                    : () => handleSignIn(setErrorMessage, email, password, setIsLoggedIn, rememberMe)
                 }
               >
                 {isForgetPassword ? "Reset Password" : isSignUp ? "Sign Up" : "Login"}

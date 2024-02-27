@@ -19,6 +19,7 @@ export async function RegisterNewAccount(email, password) {
 
     const data = await response.json();
     console.log("Registration successful:", data);
+
     // Optionally, you can return data or perform other actions based on the response
     return data;
   } catch (error) {
@@ -27,7 +28,7 @@ export async function RegisterNewAccount(email, password) {
   }
 }
 
-export async function Login(email, password, setIsLoggedIn, setErrorMessage) {
+export async function Login(email, password, setIsLoggedIn, setErrorMessage, rememberMe) {
   console.log("email: ", email);
   console.log("Pass: ", password);
   setErrorMessage("Wrong email or password");
@@ -50,12 +51,15 @@ export async function Login(email, password, setIsLoggedIn, setErrorMessage) {
 
     // Set the isLoggedIn state to true
     setIsLoggedIn(true);
-    //setIsLoggedIn((prev) => !prev);
-    console.log("AAAAA");
+
+    // Store the token securely
+    if (rememberMe) {
+      localStorage.setItem("token", data.token);
+    }
+
     // Optionally, you can return data or perform other actions based on the response
     return data;
   } catch (error) {
     console.error("Error logging in:", error.message);
-    // Handle the error (e.g., display an error message to the user)
   }
 }

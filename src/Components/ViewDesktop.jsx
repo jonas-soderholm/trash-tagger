@@ -5,7 +5,7 @@ import ButtonsMarker from "./ButtonsMarker.jsx"; // Ensure correct import
 import HeaderAndLogo from "./HeaderAndLogo";
 import ButtonShareMarkers from "./ButtonShareMarkers";
 import { useSharedState } from "../SharedContext.jsx";
-import { useHref } from "react-router-dom";
+import { SignOut } from "./LoginLogic.jsx";
 
 // Correctly receive props passed from MainPage
 const ViewDesktopMain = (props) => {
@@ -23,11 +23,6 @@ const ViewDesktopMain = (props) => {
     handleEditClick,
     handleDeleteClick,
   } = props;
-
-  function UpdateSite() {
-    console.log("signOut");
-    window.location.href = "http://localhost:3000/";
-  }
 
   return (
     <>
@@ -51,7 +46,7 @@ const ViewDesktopMain = (props) => {
         </div>
         <div className="right-part flex md:w-2/3 items-center rounded-lg">
           <button
-            onClick={() => UpdateSite()}
+            onClick={() => SignOut(isSharedLink)}
             className="sign-out-button absolute button-container-color z-[1005] top-0 rounded-sm body-font right-0 m-8 items-center text-center p-[6px] text-[12px]"
           >
             {isSharedLink ? "Sign in to tag!" : "Sign out"}

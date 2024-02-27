@@ -3,6 +3,7 @@ import Modal from "./Modal";
 import Map from "./Map";
 import ButtonsMarker from "./ButtonsMarker.jsx"; // Ensure correct import
 import { useSharedState } from "../SharedContext.jsx";
+import { SignOut } from "./LoginLogic.jsx";
 
 // Adapt this structure for the mobile-specific layout and functionality
 const ViewMobileMain = (props) => {
@@ -21,11 +22,6 @@ const ViewMobileMain = (props) => {
     handleDeleteClick,
   } = props;
 
-  function UpdateSite() {
-    console.log("signOut");
-    window.location.href = "http://localhost:3000/";
-  }
-
   return (
     <>
       <div className="main-container h-screen flex flex-col">
@@ -38,7 +34,7 @@ const ViewMobileMain = (props) => {
         />
         {/* Additional mobile-specific layout and components */}
         <button
-          onClick={() => UpdateSite()}
+          onClick={() => SignOut(isSharedLink)}
           className="sign-out-button absolute button-container-color z-[1005] top-0 rounded-sm body-font right-0 m-8 items-center text-center p-[6px] text-[12px]"
         >
           {isSharedLink ? "Sign in to tag!" : "Sign out"}

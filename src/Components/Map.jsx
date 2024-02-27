@@ -142,7 +142,7 @@ const Map = React.memo(({ onAddMark }) => {
         icon: L.divIcon({
           className: "background-color my-custom-marker body-font",
           html: `<div id="marker-${markerIndex}" style="display: flex; justify-content: center; align-items: 
-          center; color: #e5e7eb; background: linear-gradient(0deg, rgb(95, 95, 95), rgb(179, 179, 179)); padding: 30px;
+          center; color: #e5e7eb; background: linear-gradient(0deg, rgb(33, 33, 33), rgb(79, 79, 79)); padding: 30px;
            font-size: 23px; border-radius: 100%; opacity: 92%; height: 100%; width: 100%; transform: 
            translateX(${-20}px) translateY(${-20}px);">${markerIndex}</div>`,
         }),

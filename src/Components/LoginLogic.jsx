@@ -1,6 +1,6 @@
 import { RegisterNewAccount, Login } from "./LoginHandlerBackend";
 
-export const handleSignIn = (setErrorMessage, email, password, setIsLoggedIn) => {
+export const handleSignIn = (setErrorMessage, email, password, setIsLoggedIn, rememberMe) => {
   if (!email || !password) {
     setErrorMessage("Email and password are required.");
     return;
@@ -12,14 +12,13 @@ export const handleSignIn = (setErrorMessage, email, password, setIsLoggedIn) =>
   console.log(email);
   //setErrorMessage("Logged in");
 
-  Login(email, password, setIsLoggedIn, setErrorMessage);
+  Login(email, password, setIsLoggedIn, setErrorMessage, rememberMe);
 };
 
 export const toggleForm = (setIsSignUp, setIsForgetPassword, setErrorMessage) => {
   setIsSignUp((prevIsSignUp) => !prevIsSignUp);
   setIsForgetPassword(false);
   setErrorMessage("");
-  console.log("toggleForm");
 };
 
 export const toggleForgetPassword = (setIsForgetPassword, setErrorMessage, isForgetPassword) => {
@@ -56,9 +55,6 @@ export const handleSignUpSubmit = (
   setSuccessMessage("Congratulations! You have successfully created an account.");
   setErrorMessage(null);
   SuccessSignUpVisuals();
-  console.log("handleSubmit");
-  //console.log(email, password);
-
   RegisterNewAccount(email, password);
 };
 
@@ -66,10 +62,8 @@ export const handleForgetPassword = (email, setErrorMessage) => {
   if (!email.trim().includes("@")) {
     setErrorMessage("Please enter a valid email address.");
   } else {
-    setErrorMessage("A mail have been sent with new password");
+    setErrorMessage("");
   }
-  console.log("handleForgotPassword");
-  console.log(email);
 };
 
 export function SuccessSignUpVisuals() {
@@ -82,6 +76,14 @@ export function SuccessSignUpVisuals() {
       element.classList.add("hidden");
     }
   });
+}
 
-  console.log("Visuals");
+export function SignOut(isSharedLink) {
+  console.log("signOut");
+
+  if (!isSharedLink) {
+    localStorage.removeItem("token");
+  }
+
+  window.location.href = "http://localhost:3000/";
 }

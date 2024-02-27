@@ -22,6 +22,15 @@ function MainPage() {
   const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
   useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    console.log("token start: ", token);
+
+    if (token) {
+      setIsLoggedIn(true);
+      console.log("token start: ", token);
+    }
+
     // Check if the URL includes "share" to determine if it's a shared link
     const checkIfSharedLink = () => {
       const urlContainsShare = window.location.href.includes("shared-markers?groupId");
