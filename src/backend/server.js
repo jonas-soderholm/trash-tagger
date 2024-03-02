@@ -3,7 +3,7 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const app = express();
 const helmet = require("helmet");
-const PORT = process.env.PORT || 3100;
+const PORT = process.env.PORT || 80;
 
 app.use(
   cors({
