@@ -28,7 +28,7 @@ export async function RegisterNewAccount(email, password) {
 
 export async function Login(email, password, setIsLoggedIn, setErrorMessage, rememberMe) {
   try {
-    const response = await fetch("http://localhost:3100/login", {
+    const response = await fetch("http://164.92.254.31/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

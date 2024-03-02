@@ -22,7 +22,7 @@ function ButtonShareMarkers() {
     }));
 
     try {
-      const response = await fetch("http://localhost:3100/MarkerInformation", {
+      const response = await fetch("http://164.92.254.31/MarkerInformation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function ButtonShareMarkers() {
       console.log("Marker data sent successfully");
 
       // Update the shareable link state and show the modal
-      const link = `http://localhost:3000/shared-markers?groupId=${uuidMarkers}`;
+      const link = `http://164.92.254.31/shared-markers?groupId=${uuidMarkers}`;
       setShareableLink(link);
       console.log(shareableLink);
 
@@ -48,7 +48,7 @@ function ButtonShareMarkers() {
   };
 
   const fetchGroupMarkers = async (groupId) => {
-    const url = `http://localhost:3100/shared-markers?groupId=${groupId}`;
+    const url = `http://164.92.254.31/shared-markers?groupId=${groupId}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
