@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 function ButtonShareMarkers() {
   const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
+  // eslint-disable-next-line no-unused-vars
   const { markersLoaded, setMarkersLoaded } = useSharedState();
   const { isMobile } = useSharedState();
   const { mapArray } = useSharedState();
@@ -125,7 +126,7 @@ function ButtonShareMarkers() {
             onClick={sendMarkerData}
             className={`send-button ${
               mapArray.length === 0 ? "hidden" : "visible"
-            } text-xs px-2 text-center my-auto py-2 rounded-sm share-button-mobile`}
+            } text-xs px-3 text-center my-auto py-2 rounded-full share-button-mobile`}
           >
             Share tags!
           </button>
@@ -135,8 +136,8 @@ function ButtonShareMarkers() {
           {!isSharedLink && (
             <div className="flex justify-center">
               <button
-                className="send-button body-font  text-xl backdrop-blur-xl flex px-5 py-4
-                 rounded-full fixed mb-10 p4 share-button bottom-2 mx-auto hover:bg-gray-400 "
+                className="share-button-mobile body-font  text-xl backdrop-blur-xl flex px-5 py-4
+                 rounded-full fixed mb-10 p4 bottom-2 mx-auto hover:bg-gray-400 "
                 onClick={sendMarkerData}
               >
                 Share tags!

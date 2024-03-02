@@ -13,8 +13,8 @@ const ViewDesktopMain = (props) => {
 
   const {
     isModalOpen,
-    CloseModalWindow, // Ensure naming matches the MainPage prop
-    ModalEditSubmit, // Ensure naming matches the MainPage prop
+    CloseModalWindow,
+    ModalEditSubmit,
     modalContent,
     setModalContent,
     handleMapClicks,

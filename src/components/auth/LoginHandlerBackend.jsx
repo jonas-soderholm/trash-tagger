@@ -27,10 +27,6 @@ export async function RegisterNewAccount(email, password) {
 }
 
 export async function Login(email, password, setIsLoggedIn, setErrorMessage, rememberMe) {
-  console.log("email: ", email);
-  console.log("Pass: ", password);
-  setErrorMessage("Wrong email or password");
-
   try {
     const response = await fetch("http://localhost:3100/login", {
       method: "POST",
@@ -58,6 +54,7 @@ export async function Login(email, password, setIsLoggedIn, setErrorMessage, rem
     // Optionally, you can return data or perform other actions based on the response
     return data;
   } catch (error) {
+    setErrorMessage("Wrong email or password");
     console.error("Error logging in:", error.message);
   }
 }

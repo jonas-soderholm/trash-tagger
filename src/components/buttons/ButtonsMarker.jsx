@@ -5,7 +5,6 @@ import ButtonShareMarkers from "./ButtonShareMarkers.jsx";
 import { useSharedState } from "../../SharedContext.jsx";
 
 function ButtonsMarker({ mapArray, markerIndex, handleEditClick, handleDeleteClick }) {
-  // eslint-disable-next-line no-unused-vars
   const { isMobile } = useSharedState();
   const { isSharedLink } = useSharedState();
   const { sharedMarkers } = useSharedState();
@@ -21,7 +20,7 @@ function ButtonsMarker({ mapArray, markerIndex, handleEditClick, handleDeleteCli
             </div>
             {/* Current marker counter*/}
             <div
-              className={`text-2xl -mt-8 text-slate-200 text-center body-font ${
+              className={`text-2xl -mt-2 text-slate-200 text-center body-font ${
                 mapArray.length >= 0 && sharedMarkers.length === 0 ? "animation-tags-header-mobile" : "hidden"
               }`}
             >

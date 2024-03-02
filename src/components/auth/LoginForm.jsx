@@ -21,13 +21,28 @@ const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
   const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
+  function Logo() {
+    return (
+      <div class="absolute flex translate-x-[3rem] translate-y-[5.1rem] z-[20]">
+        <div class="flex flex-col justify-center items-center">
+          <img src="./logo.png" alt="" class="h-auto w-[10rem] translate-x-[-0.2rem]" />
+          <div class="concert-one-regular mt-1 text-slate-200">MapTagger.</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gray flex items-center justify-center h-screen w-full px-5 sm:px-0">
-      <div className="flex bg-white rounded-lg shadow-2xl border overflow-hidden max-w-sm lg:max-w-4xl w-full">
-        <div className="lg:w-1/2 bg-cover md:block hidden">
-          <img src="./login.png " alt="" />
+      <div className="md:hidden w-[1rem] text-sm flex absolute translate-x-[-3.5rem] translate-y-[-22rem]  justify-center items-center">
+        <Logo />
+      </div>
+      <div className="flex bg-white rounded-lg shadow-2xl border overflow-hidden max-w-sm md:max-w-4xl w-full">
+        <div className=" md:w-1/2 bg-cover md:block hidden text-[3.8rem]">
+          <Logo />
+          <img className="h-full filter brightness-50" src="./login.png" alt="" />
         </div>
-        <div className=" w-full p-8 lg:w-1/2">
+        <div className=" w-full p-8 md:w-1/2">
           <p className="signup-success-hidden text-xl text-gray-600 text-center">
             {isForgetPassword ? "Forgot Password?" : isSignUp ? "Sign Up" : "Login"}
           </p>

@@ -15,8 +15,9 @@ function MainPage() {
   const [editIndex, setEditIndex] = useState(0);
   const { markers, setMarkers } = useSharedState();
   const { markerIndex, setMarkerIndex } = useSharedState();
-  const { isMobile, setIsMobile } = useSharedState();
-  const { /*sharedMarkers,*/ setSharedMarkers } = useSharedState();
+  const { isMobile } = useSharedState();
+  // eslint-disable-next-line no-unused-vars
+  const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { mapArray, setMapArray } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
   const { isLoggedIn, setIsLoggedIn } = useSharedState();

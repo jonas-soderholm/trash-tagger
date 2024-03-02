@@ -2,7 +2,6 @@ import React from "react";
 import { useSharedState } from "../../SharedContext.jsx";
 
 function HeaderAndLogo() {
-  // eslint-disable-next-line no-unused-vars
   const { isMobile } = useSharedState();
   const { mapArray } = useSharedState();
   const { sharedMarkers } = useSharedState();
@@ -12,19 +11,26 @@ function HeaderAndLogo() {
       {isMobile ? (
         <>
           {mapArray.length >= 0 && sharedMarkers.length === 0 ? (
-            <div className="logo flex mt-8 mr-3">
-              <img src="./icon3.png" alt="" style={{ height: "80px", width: "80px" }} />
-              <div className="header-font text-[3.8rem] mt-1 text-slate-200">TrashTagger</div>
+            <div className="logo flex items-center  mt-8 mr-3">
+              <img
+                src="./logo.png"
+                className="flex items-center translate-y-[-0.5rem] justify-center"
+                alt=""
+                style={{ height: "80px", width: "80px" }}
+              />
+              <div className="concert-one-regular flex items-center text-[2rem] mt-2 text-slate-200">MapTagger.</div>
             </div>
           ) : (
             <>
               <div className="logo flex">
                 <img
-                  src="./icon3.png"
+                  src="./logo.png"
                   alt=""
                   style={{ height: "50px", width: "50px", marginLeft: "15px", marginRight: "-2px" }}
                 />
-                <div className="my-auto pt-2 header-font text-center text-3xl text-slate-200">TrashTagger</div>
+                <div className="my-auto pt-[1.1rem] concert-one-regular  text-center text-2xl text-slate-200">
+                  MapTagger.
+                </div>
               </div>
             </>
           )}
@@ -33,9 +39,9 @@ function HeaderAndLogo() {
         <>
           {" "}
           <div className="w-[8vw] justify-center mx-auto my-auto pt-4">
-            <img src="./icon3.png" alt="" />
+            <img src="./logo.png" alt="" />
           </div>
-          <div className="Header header-font text-center text-[6vw] text-slate-200">TrashTagger</div>
+          <div className="concert-one-regular mt-8 text-center text-[4vw] text-slate-200">MapTagger.</div>
         </>
       )}
     </>
