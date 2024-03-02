@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool");
+const pool = require("../pool");
 
 // Import Mailgun
 const mailgun = require("mailgun-js")({

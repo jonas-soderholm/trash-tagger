@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useSharedState } from "../SharedContext.jsx";
-import Modal from "./Modal.jsx";
+import { useSharedState } from "../../SharedContext.jsx";
+import Modal from "../modal/Modal.jsx";
 
 export const maxAmmountOfTags = 11;
 
@@ -19,6 +19,7 @@ export function createNewSharableMarker(_, lat, long, info) {
 }
 
 const Map = React.memo(({ onAddMark }) => {
+  // eslint-disable-next-line no-unused-vars
   const { markers, setMarkers } = useSharedState();
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
@@ -27,11 +28,12 @@ const Map = React.memo(({ onAddMark }) => {
   const [markerPosition, setMarkerPosition] = useState(null);
   const { markerIndex, setMarkerIndex } = useSharedState();
   const { sharedMarkers, setSharedMarkers } = useSharedState();
+  // eslint-disable-next-line no-unused-vars
   const { newSharingObject, setNewSharingObject } = useSharedState();
-  const { isSharedLink, setIsSharedLink } = useSharedState();
-  const { markersLoaded, setMarkersLoaded } = useSharedState();
-  const { isLoggedIn, setIsLoggedIn } = useSharedState();
-
+  const { isSharedLink } = useSharedState();
+  const { markersLoaded } = useSharedState();
+  const { isLoggedIn } = useSharedState();
+  // eslint-disable-next-line no-unused-vars
   const [center, setCenter] = useState([0, 0]);
   const zoom = 15;
   const inputRef = useRef(null);

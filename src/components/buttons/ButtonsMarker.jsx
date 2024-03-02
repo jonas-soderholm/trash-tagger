@@ -1,14 +1,14 @@
 import React from "react";
 import ButtonsEditDelete from "./ButtonsEditDelete.jsx";
-import HeaderAndLogo from "./HeaderAndLogo.jsx";
+import HeaderAndLogo from "../view/HeaderAndLogo.jsx";
 import ButtonShareMarkers from "./ButtonShareMarkers.jsx";
-import { useSharedState } from "../SharedContext.jsx";
+import { useSharedState } from "../../SharedContext.jsx";
 
 function ButtonsMarker({ mapArray, markerIndex, handleEditClick, handleDeleteClick }) {
   // eslint-disable-next-line no-unused-vars
-  const { isMobile, setIsMobile } = useSharedState();
-  const { isSharedLink, setIsSharedLink } = useSharedState();
-  const { sharedMarkers, setSharedMarkers } = useSharedState();
+  const { isMobile } = useSharedState();
+  const { isSharedLink } = useSharedState();
+  const { sharedMarkers } = useSharedState();
 
   return (
     <>

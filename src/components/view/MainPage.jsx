@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import { useSharedState } from "../SharedContext.jsx";
+import { useSharedState } from "../../SharedContext.jsx";
 import { Routes, Route } from "react-router-dom";
-import { DeleteMarker } from "./Map";
-import { maxAmmountOfTags } from "./Map";
-import ViewMobileMain from "./ViewMobile";
-import ViewDesktopMain from "./ViewDesktop";
-import LoginForm from "./LoginForm";
-import NotFoundPage from "./NotFoundPage";
+import { DeleteMarker } from "./Map.jsx";
+import { maxAmmountOfTags } from "./Map.jsx";
+import ViewMobileMain from "./ViewMobile.jsx";
+import ViewDesktopMain from "./ViewDesktop.jsx";
+import LoginForm from "../auth/LoginForm.jsx";
+import NotFoundPage from "./NotFoundPage.jsx";
 
 function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);

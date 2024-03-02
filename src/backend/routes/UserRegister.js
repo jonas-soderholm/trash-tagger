@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("./Pool");
 const bcrypt = require("bcrypt");
+const pool = require("../pool");
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;

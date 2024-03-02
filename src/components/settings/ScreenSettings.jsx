@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSharedState } from "../SharedContext.jsx";
+import { useEffect } from "react";
+import { useSharedState } from "../../SharedContext.jsx";
 
 function ScreenSettings() {
-  const { mapArray, setMapArray } = useSharedState([]);
+  const { mapArray } = useSharedState([]);
   const { isMobile, setIsMobile } = useSharedState();
 
   // Check if user wants to leave page or not

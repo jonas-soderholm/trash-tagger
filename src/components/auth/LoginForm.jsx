@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSharedState } from "../SharedContext.jsx";
+import React, { useState } from "react";
+import { useSharedState } from "../../SharedContext.jsx";
 import {
   handleSignIn,
   toggleForm,
@@ -18,6 +18,7 @@ const LoginForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const { isLoggedIn, setIsLoggedIn } = useSharedState();
 
   return (

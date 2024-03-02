@@ -1,13 +1,13 @@
 import React from "react";
-import Modal from "./Modal";
-import Map from "./Map";
-import ButtonsMarker from "./ButtonsMarker.jsx"; // Ensure correct import
-import { useSharedState } from "../SharedContext.jsx";
-import { SignOut } from "./LoginLogic.jsx";
+import Modal from "../modal/Modal.jsx";
+import Map from "./Map.jsx";
+import ButtonsMarker from "../buttons/ButtonsMarker.jsx"; // Ensure correct import
+import { useSharedState } from "../../SharedContext.jsx";
+import { SignOut } from "../auth/LoginLogic.jsx";
 
 // Adapt this structure for the mobile-specific layout and functionality
 const ViewMobileMain = (props) => {
-  const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { isSharedLink } = useSharedState();
 
   const {
     isModalOpen,

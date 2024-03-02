@@ -1,5 +1,3 @@
-import { useSharedState } from "../SharedContext.jsx";
-
 export async function RegisterNewAccount(email, password) {
   console.log("email: ", email);
   console.log("Pass: ", password);

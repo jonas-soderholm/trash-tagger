@@ -1,15 +1,15 @@
 import React from "react";
-import Modal from "./Modal";
-import Map from "./Map";
-import ButtonsMarker from "./ButtonsMarker.jsx"; // Ensure correct import
-import HeaderAndLogo from "./HeaderAndLogo";
-import ButtonShareMarkers from "./ButtonShareMarkers";
-import { useSharedState } from "../SharedContext.jsx";
-import { SignOut } from "./LoginLogic.jsx";
+import Modal from "../modal/Modal.jsx";
+import Map from "./Map.jsx";
+import ButtonsMarker from "../buttons/ButtonsMarker.jsx"; // Ensure correct import
+import HeaderAndLogo from "./HeaderAndLogo.jsx";
+import ButtonShareMarkers from "../buttons/ButtonShareMarkers.jsx";
+import { useSharedState } from "../../SharedContext.jsx";
+import { SignOut } from "../auth/LoginLogic.jsx";
 
 // Correctly receive props passed from MainPage
 const ViewDesktopMain = (props) => {
-  const { isSharedLink, setIsSharedLink } = useSharedState();
+  const { isSharedLink } = useSharedState();
 
   const {
     isModalOpen,

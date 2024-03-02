@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import MainPage from "./Components/MainPage";
-import ScreenSettings from "./Components/ScreenSettings";
+import MainPage from "./components/view/MainPage.jsx";
+import ScreenSettings from "./components/settings/ScreenSettings.jsx";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

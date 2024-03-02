@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSharedState } from "../SharedContext.jsx";
+import { useSharedState } from "../../SharedContext.jsx";
 import { v4 as uuidv4 } from "uuid";
 
 function ButtonShareMarkers() {
   const { sharedMarkers, setSharedMarkers } = useSharedState();
   const { isSharedLink, setIsSharedLink } = useSharedState();
   const { markersLoaded, setMarkersLoaded } = useSharedState();
-  const { isMobile, setIsMobile } = useSharedState();
-  const { mapArray, setMapArray } = useSharedState();
+  const { isMobile } = useSharedState();
+  const { mapArray } = useSharedState();
 
   // State for managing modal visibility and the shareable link
   const [showModal, setShowModal] = useState(false);
