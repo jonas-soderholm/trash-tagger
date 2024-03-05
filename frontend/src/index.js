@@ -4,7 +4,7 @@ import "./index.css";
 import MainPage from "./components/view/MainPage.jsx";
 import ScreenSettings from "./components/settings/ScreenSettings.jsx";
 import reportWebVitals from "./reportWebVitals.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { SharedStateProvider } from "./SharedContext.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
