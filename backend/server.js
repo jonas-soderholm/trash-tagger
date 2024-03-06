@@ -35,9 +35,13 @@ const apiLimiter = rateLimit({
   max: 50, // limit each IP to 100 requests per window
 });
 
+// Route for root URL ("/")
+app.get("/", (req, res) => {
+  res.send("Hello from server");
+});
+
 app.use(apiLimiter);
 app.use(express.json());
-app.use(express.static("/public"));
 
 const markerInformationRouter = require("./routes/MarkerInformation");
 const createSharedLinkRouter = require("./routes/CreateSharedLink");
