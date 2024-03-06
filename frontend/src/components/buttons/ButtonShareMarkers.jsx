@@ -34,12 +34,9 @@ function ButtonShareMarkers() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      console.log("Marker data sent successfully");
-
       // Update the shareable link state and show the modal
       const link = `http://localhost:3000/shared-markers?groupId=${uuidMarkers}`;
       setShareableLink(link);
-      console.log(shareableLink);
 
       setShowModal(true); // Show the modal with the link
     } catch (error) {
@@ -79,7 +76,6 @@ function ButtonShareMarkers() {
     navigator.clipboard.writeText(shareableLink).then(
       () => {
         // Optional: Display a message or change button text/state to indicate the link was copied
-        console.log("Link copied to clipboard!");
       },
       (err) => {
         console.error("Could not copy text: ", err);

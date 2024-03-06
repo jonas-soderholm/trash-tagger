@@ -9,8 +9,6 @@ export const handleSignIn = (setErrorMessage, email, password, setIsLoggedIn, re
     setErrorMessage("Please enter a valid email address.");
     return;
   }
-  console.log(email);
-  //setErrorMessage("Logged in");
 
   Login(email, password, setIsLoggedIn, setErrorMessage, rememberMe);
 };
@@ -38,7 +36,6 @@ export const handleSignUpSubmit = (
     setErrorMessage("Please enter a valid email address.");
     return;
   }
-  console.log(email);
   if (!email || !password || !confirmPassword) {
     setErrorMessage("All fields are required.");
     return;
@@ -79,8 +76,6 @@ export function SuccessSignUpVisuals() {
 }
 
 export function SignOut(isSharedLink) {
-  console.log("signOut");
-
   if (!isSharedLink) {
     localStorage.removeItem("token");
   }

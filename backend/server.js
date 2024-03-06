@@ -20,7 +20,6 @@ connection.connect(function (err) {
     console.error("Error connecting: " + err.stack);
     return;
   }
-  console.log("Connected as id " + connection.threadId);
 });
 
 // Close the connection
@@ -51,7 +50,7 @@ app.use("/login", userLogin);
 app.use("/register", userRegister);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  //console.log(`Server is running on port ${PORT}`);
 });
 
 app.use((error, req, res, next) => {

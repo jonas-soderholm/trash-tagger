@@ -58,7 +58,6 @@ const Map = React.memo(({ onAddMark }) => {
           const { latitude, longitude } = position.coords;
           setCenter([latitude, longitude]);
           mapRef.current.setView([latitude, longitude], zoom);
-          console.log("GPS location found");
         };
 
         mapRef.current.on("locationerror", function (e) {
@@ -94,7 +93,6 @@ const Map = React.memo(({ onAddMark }) => {
 
       // // Add a marker for the shared location
       if (isSharedLink && mapRef.current) {
-        console.log(sharedMarkers);
         sharedMarkers.forEach((marker, i) => {
           const markerHtml = `<div id="marker-${i + 1}" style="display: flex; justify-content: center; align-items:
             center; color: #e5e7eb; opacity: 92%; background: linear-gradient(0deg, rgb(33, 33, 33), rgb(79, 79, 79)); padding: 30px;
