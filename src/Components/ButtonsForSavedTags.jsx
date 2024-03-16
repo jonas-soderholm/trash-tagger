@@ -13,7 +13,7 @@ function ButtonsForSavedTags({ mapArray, markerIndex, handleEditClick, handleDel
             <div className="flex">
               {/* Share button */}
               <button
-                className={`send-button ${
+                className={`send-button  pointer-events-none  ${
                   mapArray.length === 0 ? "hidden" : "visible"
                 } text-xs px-2 text-center my-auto py-2 rounded-sm share-button-mobile`}
               >

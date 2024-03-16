@@ -15,7 +15,6 @@ export function DeleteMarker(markers, setMarker, index) {
 }
 
 const Map = React.memo(({ center, zoom, onAddMark }) => {
-  // eslint-disable-next-line no-unused-vars
   const { markers, setMarkers } = useSharedState();
   const mapRef = useRef(null);
   const containerId = useRef(`map-${Date.now()}`);
@@ -34,10 +33,29 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
   useEffect(() => {
     if (!mapRef.current && document.getElementById(containerId.current)) {
-      mapRef.current = L.map(containerId.current).setView(center, zoom);
+      const newCenter = [center[0] - 50, center[1]];
+      mapRef.current = L.map(containerId.current).setView(newCenter, 2);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
       }).addTo(mapRef.current);
+
+      // Get user's current position
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const userPosition = [latitude, longitude];
+
+          // Center the map on user's current position
+          mapRef.current.setView(userPosition, zoom);
+
+          // Set marker position to user's current position
+          setMarkerPosition({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("Error getting user's location:", error);
+        }
+      );
+
       mapRef.current.on("click", function (e) {
         setMarkerIndex((prevIndex) => {
           if (prevIndex < maxAmmountOfTags) {
@@ -93,7 +111,7 @@ const Map = React.memo(({ center, zoom, onAddMark }) => {
 
   return (
     <>
-      <div id={containerId.current} style={{ height: "100%", width: "100%" }}></div>
+      <div className="md:rounded-lg" id={containerId.current} style={{ height: "100%", width: "100%" }}></div>
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
