@@ -80,5 +80,5 @@ export function SignOut(isSharedLink) {
     localStorage.removeItem("token");
   }
 
-  window.location.href = "http://164.92.254.31/";
+  window.location.href = "http://localhost:5000/";
 }

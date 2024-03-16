@@ -36,6 +36,7 @@ function ButtonShareMarkers() {
 
       // Update the shareable link state and show the modal
       const link = `http://localhost:3000/shared-markers?groupId=${uuidMarkers}`;
+      //const link = `${window.location.origin}/shared-markers?groupId=${uuidMarkers}`;
       setShareableLink(link);
 
       setShowModal(true); // Show the modal with the link
@@ -46,17 +47,29 @@ function ButtonShareMarkers() {
 
   const fetchGroupMarkers = async (groupId) => {
     const url = `http://localhost:5000/shared-markers?groupId=${groupId}`;
+    console.log("fetch marker1");
+
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
-      setSharedMarkers(data);
-      setIsSharedLink(true);
-      setMarkersLoaded(true);
+
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        console.log("DATA: ", data);
+        setSharedMarkers(data);
+        setIsSharedLink(true);
+        setMarkersLoaded(true);
+      } else {
+        console.error("Unexpected response format:", contentType);
+        // Handle non-JSON response here
+        // For example, display an error message to the user
+      }
     } catch (error) {
-      console.error("Error fetching group markers:", error);
+      console.error("Error fetching group markers:", error.message);
+      console.error("Error details:", error);
     }
   };
 
@@ -64,10 +77,14 @@ function ButtonShareMarkers() {
     const queryParams = new URLSearchParams(window.location.search);
     const groupId = queryParams.get("groupId");
 
+    console.log("Group ID:", groupId);
+
     if (groupId) {
       fetchGroupMarkers(groupId);
+      console.log("asd1");
     } else {
       setMarkersLoaded(true);
+      console.log("asd2");
     }
   }, []);
 
